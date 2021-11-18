@@ -28,15 +28,4 @@ caixaNflutua (p1,c1) (p2,c2) = p1 == Caixa && (p2 == Caixa) || (p2 == Bloco)
 caixaNflutua (p1,(x1,y1)) (p2,(x2,y2)) = x1==x2 && y2 == (y1+1) 
 
 
-comprimento :: [(Peca, Coordenadas)] -> Int
-comprimento [(a, (b, c))] = b
-comprimento ((a, (b, c)) : (d, (e, f)) : xs)
-  | b > e = comprimento ((a, (b, c)) : xs)
-  | otherwise = comprimento ((d, (e, f)) : xs)
-
-altura :: [(Peca, Coordenadas)] -> Int
-altura [(a, (b, c))] = c
-altura ((a, (b, c)) : (d, (e, f)) : xs)
-  | c > f = altura ((a, (b, c)) : xs)
-  | otherwise = altura ((d, (e, f)) : xs)
 
