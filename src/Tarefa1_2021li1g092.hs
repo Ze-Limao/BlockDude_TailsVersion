@@ -44,3 +44,4 @@ emptyspace l = nVazios l >= 1
 {--chao :: [(Peca,Coordenadas)] -> Bool
 chao ((p,(x,y)):t) -}
     
+    
