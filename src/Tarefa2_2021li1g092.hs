@@ -9,9 +9,12 @@ Módulo para a realização da Tarefa 2 do projeto de LI1 em 2021/22.
 module Tarefa2_2021li1g092 where
 
 import LI12122
+import Funcoesuteis
 
 constroiMapa :: [(Peca, Coordenadas)] -> Mapa
 constroiMapa pecas = undefined
 
 desconstroiMapa :: Mapa -> [(Peca, Coordenadas)]
 desconstroiMapa mapa = undefined
+
+
