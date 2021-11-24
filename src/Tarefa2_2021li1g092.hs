@@ -12,9 +12,20 @@ import LI12122
 import Funcoesuteis
 
 constroiMapa :: [(Peca, Coordenadas)] -> Mapa
-constroiMapa pecas = undefined
+constroiMapa [] = []
+constroiMapa (p,(x,y):t) =
+
+
+--fazmapa , alturta l = n linhas
+
+line :: Coordenadas -> [(Peca, Coordenadas)] -> [(Peca)]
+line (a,b) (p,(x,y):t) 
+    |(a,b) elem (p,(x,y):t) = p : line (a,b+1) t
+    |otherwise = Vazio : line (a,b+1)
+
+
+--ver uma linha uma a uma e fazer a line , depois dissojuntar todas as lines (cosntroimapa)
+
 
 desconstroiMapa :: Mapa -> [(Peca, Coordenadas)]
-desconstroiMapa mapa = undefined
-
-
+desconstroiMapa mapa = 
