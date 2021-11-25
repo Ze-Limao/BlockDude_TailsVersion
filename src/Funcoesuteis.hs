@@ -22,7 +22,7 @@ bloconext (a, (b, c))  (d, (e, f))
 lowerblock :: [(Peca, Coordenadas)] -> (Peca, Coordenadas)
 lowerblock [(p,(x,y))] = (p,(x,y))
 lowerblock ((a, (x1, y1)) : (b, (x2, y2)) : t)
-  |x1 > x2 = lowerblock ((a, (x1, y1)) : t)
+  |y1 > y2 = lowerblock ((a, (x1, y1)) : t)
   |otherwise = lowerblock ((b, (x2, y2)) : t)
 
 coluna :: Int -> [(Peca, Coordenadas)] -> [(Peca, Coordenadas)]
@@ -30,7 +30,6 @@ coluna n [] = []
 coluna n ((p,(x,y)):t)
   |n == x = (p,(x,y)) : coluna n t
   |otherwise = coluna n t
-
 
 isBloco :: [(Peca, Coordenadas)] -> [(Peca, Coordenadas)]
 isBloco [] = []
