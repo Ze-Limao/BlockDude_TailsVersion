@@ -86,10 +86,19 @@ isCaixa ((p,(x,y)):t)
 
 --Tarefa 2:
 
-line :: [(Peca, Coordenadas)] -> [(Peca)]
-line (a,b) ((p,(x,y)): t) 
-    |b == y = p : line (a+1,b) t
-    |otherwise = (Vazio) : line (a+1,b) t
+ordenaX :: [(Peca, Coordenadas)] -> [(Peca, Coordenadas)]
+ordenaX [p,(x,y)] = [p,(x,y)]
+ordenaX ((p1,(x1,y1)):(p2,(x2,y2)):t) 
+  |x1<=x2 = (p1,(x1,y1)) : ordenaX ((p2,(x2,y2)):t)
+  |x1 > x2 = ordenaX (ordenaX' (p1,(x1,y1)) ((p2,(x2,y2)):t)) 
+
+
+ordenaX' :: (Peca, Coordenadas) -> [(Peca, Coordenadas)] -> [(Peca, Coordenadas)]
+ordenaX' (p,(x,y)) [] = [(p,(x,y))]
+ordenaX' (p,(x,y)) ((p1,(x1,y1)):(p2,(x2,y2)):t)
+    |x <= x1 = (p,(x,y)) : ((p1,(x1,y1)):t)
+    |x > x1 &&  x < x2 = (p1,(x1,y1)) : (p,(x,y)) : t
+    |otherwise = (p,(x,y)) : ordenaX' (p,(x,y)) ((p2,(x2,y2)):t)
 
 
 
