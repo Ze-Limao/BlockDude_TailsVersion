@@ -84,8 +84,13 @@ isCaixa ((p,(x,y)):t)
   |otherwise = isCaixa t 
 
 
---Tarefa 2:
+--[[Vazio, Vazio, Vazio, Vazio, Vazio, Vazio, Bloco],[Vazio, Vazio, Vazio, Vazio, Vazio, Vazio, Bloco],[Porta, Vazio, Vazio, Vazio, Caixa, Vazio, Bloco],[Bloco, Bloco, Bloco, Bloco, Bloco, Bloco, Bloco]]
 
+mylength :: [a] -> Int
+mylength [] = 0
+mylength (x:xs) = 1 + mylength xs
+
+--Tarefa 2:  
 ordenaX :: [(Peca, Coordenadas)] -> [(Peca, Coordenadas)]
 ordenaX [p,(x,y)] = [p,(x,y)]
 ordenaX ((p1,(x1,y1)):(p2,(x2,y2)):t) 

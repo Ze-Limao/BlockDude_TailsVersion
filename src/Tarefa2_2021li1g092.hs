@@ -29,13 +29,21 @@ line' (a,b) ((p,(x,y)):t)
 
 
 desconstroiMapa :: Mapa -> [(Peca, Coordenadas)]
-desconstroiMapa mapa = descontroiMapa' (0,0) mapa
+desconstroiMapa mapa = desconstroiMapa' mapa (0,0) 
+
+desconstroiMapa' :: Mapa -> Coordenadas -> [(Peca, Coordenadas)]
+desconstroiMapa' [[]]  (x,y) = []
+desconstroiMapa' ((h:t) : xs)  (x,y) 
+    |x == mylength (h:t) = desconstroiMapa' (xs) (0,y+1)
+    |y == mylength ((h:t) : xs) = [(h,(x,y))]
+    |otherwise = desconstroiMapa'' ((h:t) : xs) (x,y) 
+
+desconstroiMapa'' :: Mapa -> Coordenadas -> [(Peca, Coordenadas)]
+desconstroiMapa'' ((h:t) : xs) (x,y)
+    |h==Vazio = desconstroiMapa'  ((t) : xs) ((x+1),y) 
+    |h==Bloco = (Bloco,(x,y)) : desconstroiMapa' ((t) : xs) ((x+1),y) 
+    |h==Caixa = (Caixa,(x,y)) : desconstroiMapa' ((t) : xs) ((x+1),y)
+    |h==Porta = (Porta,(x,y)) : desconstroiMapa' ((t) : xs) ((x+1),y)
+    |otherwise = []
 
 
-desconstroiMapa' :: Coordenadas -> Mapa -> [(Peca, Coordenadas)]
-
-desconstroiMapa' (x,y) ((h:t) : xs)
-    |h==Vazio =  desconstroiMapa' ((x+1),y) 
-    |h==Bloco = (Bloco,(x,y)) : desconstroiMapa' ((x+1),y)
-    |h==Caixa = (Caixa,(x,y)) : desconstroiMapa' ((x+1),y)
-    |h==Porta = (Porta,(x,y)) desconstroiMapa' ((x+1),y)
