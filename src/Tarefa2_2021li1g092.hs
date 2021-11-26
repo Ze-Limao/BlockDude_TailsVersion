@@ -14,6 +14,7 @@ import Funcoesuteis
 --constroiMapa :: [(Peca, Coordenadas)] -> Mapa
 
 
+--ver uma linha uma a uma e fazer a line , depois disso ,juntar todas as lines (cosntroimapa)
 
 line :: [(Peca, Coordenadas)] -> [(Peca)]
 line ((p,(x,y)):t) = line' (0,0) ((p,(x,y)):t)  
@@ -25,25 +26,13 @@ line' (a,b) ((p,(x,y)):t)
     |otherwise = []
 
 
---ver uma linha uma a uma e fazer a line , depois disso ,juntar todas as lines (cosntroimapa)
-
 
 desconstroiMapa :: Mapa -> [(Peca, Coordenadas)]
-desconstroiMapa mapa = desconstroiMapa' mapa (0,0) 
+desconstroiMapa mapa = desconstroiMapa' (0,0) mapa  
 
-desconstroiMapa' :: Mapa -> Coordenadas -> [(Peca, Coordenadas)]
-desconstroiMapa' [[]]  (x,y) = []
-desconstroiMapa' ((h:t) : xs)  (x,y) 
-    |x == mylength (h:t) = desconstroiMapa' (xs) (0,y+1)
-    |y == mylength ((h:t) : xs) = [(h,(x,y))]
-    |otherwise = desconstroiMapa'' ((h:t) : xs) (x,y) 
-
-desconstroiMapa'' :: Mapa -> Coordenadas -> [(Peca, Coordenadas)]
-desconstroiMapa'' ((h:t) : xs) (x,y)
-    |h==Vazio = desconstroiMapa'  ((t) : xs) ((x+1),y) 
-    |h==Bloco = (Bloco,(x,y)) : desconstroiMapa' ((t) : xs) ((x+1),y) 
-    |h==Caixa = (Caixa,(x,y)) : desconstroiMapa' ((t) : xs) ((x+1),y)
-    |h==Porta = (Porta,(x,y)) : desconstroiMapa' ((t) : xs) ((x+1),y)
-    |otherwise = []
-
-
+desconstroiMapa' :: Coordenadas -> Mapa -> [(Peca, Coordenadas)]
+desconstroiMapa' (x,y) [[]]  = []
+desconstroiMapa' (x,y) ([]:xs)  = desconstroiMapa' (0,y+1) xs 
+desconstroiMapa' (x,y) ((h:t) : xs)   
+    |h == Vazio = desconstroiMapa' (x+1,y) (t:xs) 
+    |otherwise = (h,(x,y)) : desconstroiMapa'  (x+1,y) (t:xs)
