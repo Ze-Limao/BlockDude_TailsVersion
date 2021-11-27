@@ -14,7 +14,16 @@ import Funcoesuteis
 constroiMapa :: [(Peca, Coordenadas)] -> Mapa
 constroiMapa pecas = undefined
 
+
 desconstroiMapa :: Mapa -> [(Peca, Coordenadas)]
-desconstroiMapa mapa = undefined
+desconstroiMapa mapa = desconstroiMapa' (0,0) mapa  
+
+desconstroiMapa' :: Coordenadas -> Mapa -> [(Peca, Coordenadas)]
+desconstroiMapa' (x,y) [[]]  = []
+desconstroiMapa' (x,y) ([]:xs)  = desconstroiMapa' (0,y+1) xs 
+desconstroiMapa' (x,y) ((h:t) : xs)   
+    |h == Vazio = desconstroiMapa' (x+1,y) (t:xs) 
+    |otherwise = (h,(x,y)) : desconstroiMapa'  (x+1,y) (t:xs)
+
 
 
