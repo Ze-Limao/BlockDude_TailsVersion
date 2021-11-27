@@ -10,15 +10,11 @@ module Tarefa3_2021li1g092 where
 
 import LI12122
 import Funcoesuteis 
-{-}
-instance Show Jogo where
-  show (Jogo mapa (Jogador (x,y) dir caixa))
-    |show (Jogo [[]] (Jogador (x,y) dir caixa)) = "" 
-    |otherwise = show mapa (Jogador (x,y) dir caixa)
-                  |espacojogador mapa (Jogador (x,y) dir caixa) == False = ""
-                  |espacojogador mapa (Jogador (x,y) dir caixa) == True = jogo' (mapear mapa) (Jogador (x,y) dir caixa)
--}
 
+instance Show Jogo where
+  show (Jogo m j) = jogo m j
+  
+  
 jogo :: Mapa -> Jogador -> String
 jogo [[]] (Jogador (x,y) dir caixa) = "" 
 jogo mapa (Jogador (x,y) dir caixa)
@@ -29,7 +25,7 @@ jogo' :: String -> Jogador -> String
 jogo' str (Jogador (x,y) dir caixa) = insertAt str (direcaodude (Jogador (x,y) dir caixa)) (posicaodude str (Jogador (x,y) dir caixa))
 
 posicaodude :: String -> Jogador -> Int
-posicaodude str (Jogador (x,y) dir caixa) = ((lengthX(lengthX' str)+1)  * y) + x + y
+posicaodude str (Jogador (x,y) dir caixa) = ((lengthX (lengthX' str))  * y) + x + y
 
 lengthX :: String -> Int
 lengthX "" = 0
