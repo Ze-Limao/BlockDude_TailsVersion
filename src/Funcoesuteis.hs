@@ -31,7 +31,6 @@ coluna n ((p,(x,y)):t)
   |n == x = (p,(x,y)) : coluna n t
   |otherwise = coluna n t
 
-
 isBloco :: [(Peca, Coordenadas)] -> [(Peca, Coordenadas)]
 isBloco [] = []
 isBloco ((p,(x,y)):t)
@@ -44,6 +43,11 @@ isCaixa ((p,(x,y)):t)
   |p == Caixa = (p,(x,y)) : isCaixa t 
   |otherwise = isCaixa t 
 
+box :: [(Peca, Coordenadas)] -> (Peca, Coordenadas)
+box [] = (Bloco, (0,0))
+box ((p,(x,y)):t) 
+  |p == Caixa = (p,(x,y))  
+  |otherwise = box t 
 
 mylength :: [a] -> Int
 mylength [] = 0
