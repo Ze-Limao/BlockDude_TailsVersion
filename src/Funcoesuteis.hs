@@ -3,6 +3,17 @@ module Funcoesuteis where
 import LI12122
 
 
+comprimento :: [(Peca, Coordenadas)] -> Int
+comprimento [(a, (b, c))] = b
+comprimento ((a, (b, c)) : (d, (e, f)) : xs)
+  | b > e = comprimento ((a, (b, c)) : xs)
+  | otherwise = comprimento ((d, (e, f)) : xs)
+
+altura :: [(Peca, Coordenadas)] -> Int
+altura [(a, (b, c))] = c
+altura ((a, (b, c)) : (d, (e, f)) : xs)
+  | c > f = altura ((a, (b, c)) : xs)
+  | otherwise = altura ((d, (e, f)) : xs)
 
 --funcoes auxiliares para chao:
 
@@ -53,21 +64,9 @@ mylength :: [a] -> Int
 mylength [] = 0
 mylength (x:xs) = 1 + mylength xs
 
-
-comprimento :: [(Peca, Coordenadas)] -> Int
-comprimento [(a, (b, c))] = b
-comprimento ((a, (b, c)) : (d, (e, f)) : xs)
-  | b > e = comprimento ((a, (b, c)) : xs)
-  | otherwise = comprimento ((d, (e, f)) : xs)
-
-altura :: [(Peca, Coordenadas)] -> Int
-altura [(a, (b, c))] = c
-altura ((a, (b, c)) : (d, (e, f)) : xs)
-  | c > f = altura ((a, (b, c)) : xs)
-  | otherwise = altura ((d, (e, f)) : xs)
-
 -- Tarefa3:
---deconstroi mapa da tarefa 2
+
+--deconstroi mapa 
 decontroiMapa :: Mapa -> [(Peca, Coordenadas)]
 decontroiMapa mapa = decontroiMapa' (0,0) mapa  
 
@@ -84,3 +83,6 @@ insertAt (x:xs) elem pos
     | pos == 0 = elem : xs
     | pos > 0 = x : insertAt xs elem (pos - 1) 
     | otherwise = x : insertAt xs elem ((pos) + length (x:xs) )
+
+-- Tarefa4: 
+
