@@ -1,44 +1,10 @@
 module Funcoesuteis where
+
 import LI12122
 
---Tarefa 1: 
-
-comprimento :: [(Peca, Coordenadas)] -> Int
-comprimento [(a, (b, c))] = b
-comprimento ((a, (b, c)) : (d, (e, f)) : xs)
-  | b > e = comprimento ((a, (b, c)) : xs)
-  | otherwise = comprimento ((d, (e, f)) : xs)
-
-altura :: [(Peca, Coordenadas)] -> Int
-altura [(a, (b, c))] = c
-altura ((a, (b, c)) : (d, (e, f)) : xs)
-  | c > f = altura ((a, (b, c)) : xs)
-  | otherwise = altura ((d, (e, f)) : xs)
-
-ultpeca :: [(Peca,Coordenadas)] -> Coordenadas
-ultpeca [] = (0,0)
-ultpeca [(p,(x,y))] = (x+1,y+1)
-ultpeca ((p,(x,y)):t) 
-    |x == comprimento [(p,(x,y))] && y == altura [(p,(x,y))] = (x,y)
-    |otherwise = ultpeca t
-
-area :: [(Peca,Coordenadas)] -> Int
-area [] = 0
-area l = area' (ultpeca l)
-
-area' :: Coordenadas -> Int
-area' (x,y) = x*y
 
 
-nPecas :: [(Peca,Coordenadas)] -> Int
-nPecas [] = 0
-nPecas ((p,(x,y)):t) = 1 + nPecas t
-
-nVazios :: [(Peca, Coordenadas)] -> Int
-nVazios [] = 0
-nVazios l = area l - nPecas l
-
-
+--funcoes auxiliares para chao:
 
 bloconext :: (Peca, Coordenadas) -> (Peca, Coordenadas) -> Bool
 bloconext (a, (b, c))  (d, (e, f))
@@ -56,7 +22,7 @@ bloconext (a, (b, c))  (d, (e, f))
 lowerblock :: [(Peca, Coordenadas)] -> (Peca, Coordenadas)
 lowerblock [(p,(x,y))] = (p,(x,y))
 lowerblock ((a, (x1, y1)) : (b, (x2, y2)) : t)
-  |x1 > x2 = lowerblock ((a, (x1, y1)) : t)
+  |y1 >= y2 = lowerblock ((a, (x1, y1)) : t)
   |otherwise = lowerblock ((b, (x2, y2)) : t)
 
 coluna :: Int -> [(Peca, Coordenadas)] -> [(Peca, Coordenadas)]
@@ -64,12 +30,6 @@ coluna n [] = []
 coluna n ((p,(x,y)):t)
   |n == x = (p,(x,y)) : coluna n t
   |otherwise = coluna n t
-
-linha :: Int -> [(Peca, Coordenadas)] -> [(Peca, Coordenadas)]
-linha n [] = []
-linha n ((p,(x,y)):t)
-  |n == y = (p,(x,y)) : linha n t
-  |otherwise = linha n t
 
 isBloco :: [(Peca, Coordenadas)] -> [(Peca, Coordenadas)]
 isBloco [] = []
@@ -83,27 +43,44 @@ isCaixa ((p,(x,y)):t)
   |p == Caixa = (p,(x,y)) : isCaixa t 
   |otherwise = isCaixa t 
 
-
---[[Vazio, Vazio, Vazio, Vazio, Vazio, Vazio, Bloco],[Vazio, Vazio, Vazio, Vazio, Vazio, Vazio, Bloco],[Porta, Vazio, Vazio, Vazio, Caixa, Vazio, Bloco],[Bloco, Bloco, Bloco, Bloco, Bloco, Bloco, Bloco]]
+box :: [(Peca, Coordenadas)] -> (Peca, Coordenadas)
+box [] = (Bloco, (0,0))
+box ((p,(x,y)):t) 
+  |p == Caixa = (p,(x,y))  
+  |otherwise = box t 
 
 mylength :: [a] -> Int
 mylength [] = 0
 mylength (x:xs) = 1 + mylength xs
 
---Tarefa 2:  
-ordenaX :: [(Peca, Coordenadas)] -> [(Peca, Coordenadas)]
-ordenaX [p,(x,y)] = [p,(x,y)]
-ordenaX ((p1,(x1,y1)):(p2,(x2,y2)):t) 
-  |x1<=x2 = (p1,(x1,y1)) : ordenaX ((p2,(x2,y2)):t)
-  |x1 > x2 = ordenaX (ordenaX' (p1,(x1,y1)) ((p2,(x2,y2)):t)) 
 
+comprimento :: [(Peca, Coordenadas)] -> Int
+comprimento [(a, (b, c))] = b
+comprimento ((a, (b, c)) : (d, (e, f)) : xs)
+  | b > e = comprimento ((a, (b, c)) : xs)
+  | otherwise = comprimento ((d, (e, f)) : xs)
 
-ordenaX' :: (Peca, Coordenadas) -> [(Peca, Coordenadas)] -> [(Peca, Coordenadas)]
-ordenaX' (p,(x,y)) [] = [(p,(x,y))]
-ordenaX' (p,(x,y)) ((p1,(x1,y1)):(p2,(x2,y2)):t)
-    |x <= x1 = (p,(x,y)) : ((p1,(x1,y1)):t)
-    |x > x1 &&  x < x2 = (p1,(x1,y1)) : (p,(x,y)) : t
-    |otherwise = (p,(x,y)) : ordenaX' (p,(x,y)) ((p2,(x2,y2)):t)
+altura :: [(Peca, Coordenadas)] -> Int
+altura [(a, (b, c))] = c
+altura ((a, (b, c)) : (d, (e, f)) : xs)
+  | c > f = altura ((a, (b, c)) : xs)
+  | otherwise = altura ((d, (e, f)) : xs)
 
+-- Tarefa3:
+--deconstroi mapa da tarefa 2
+decontroiMapa :: Mapa -> [(Peca, Coordenadas)]
+decontroiMapa mapa = decontroiMapa' (0,0) mapa  
 
+decontroiMapa' :: Coordenadas -> Mapa -> [(Peca, Coordenadas)]
+decontroiMapa' (x,y) [[]]  = []
+decontroiMapa' (x,y) ([]:xs)  = decontroiMapa' (0,y+1) xs 
+decontroiMapa' (x,y) ((h:t) : xs)   
+    |h == Vazio = decontroiMapa' (x+1,y) (t:xs) 
+    |otherwise = (h,(x,y)) : decontroiMapa' (x+1,y) (t:xs)
 
+insertAt :: [a] -> a -> Int -> [a]
+insertAt [] elem pos = [elem]
+insertAt (x:xs) elem pos
+    | pos == 0 = elem : xs
+    | pos > 0 = x : insertAt xs elem (pos - 1) 
+    | otherwise = x : insertAt xs elem ((pos) + length (x:xs) )
