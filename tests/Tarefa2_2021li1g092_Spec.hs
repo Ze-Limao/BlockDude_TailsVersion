@@ -6,6 +6,7 @@ import LI12122
 import Tarefa2_2021li1g092
 import Fixtures
 
+
 testsT2 =
   test
     [ "Tarefa 2 - Teste Desconstruir Mapa vazio" ~: [] ~=? desconstroiMapa [[]]

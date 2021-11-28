@@ -6,7 +6,6 @@ import Tarefa1_2021li1g092
 import Fixtures
 import Data.Bool (Bool(False))
 
--- Tarefa 1
 testsT1 =
   test
     [ "Tarefa 1 - Teste Valida Mapa quando há caixas a flutuar" ~:  False ~=? validaPotencialMapa [(Porta, (0, 3)),(Bloco, (0, 4)),(Bloco, (1, 4)),(Bloco, (2, 4)),(Bloco, (3, 4)),(Bloco, (4, 4)),(Caixa, (4,2)),(Bloco, (5, 4)),(Bloco, (6, 4)),(Bloco, (6, 3)),(Bloco, (6, 2)),(Bloco, (6, 1))]

@@ -6,6 +6,7 @@ import Tarefa3_2021li1g092
 import Tarefa4_2021li1g092
 import Fixtures
 
+
 testsT4 =
   test
     [ "Tarefa 4 - Teste move m1e1 Oeste e queda" ~: Jogo m1r (Jogador (5,3) Oeste False) ~=?  moveJogador m1e1 AndarEsquerda
