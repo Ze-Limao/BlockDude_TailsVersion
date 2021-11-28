@@ -12,10 +12,12 @@ import Funcoesuteis
 import LI12122
 import Tarefa3_2021li1g092
 
+-- | __Função que aplica uma lista de Movimentos a um Jogo, devolvendo o Jogo após as alterações impostas por os movimentos.
 correrMovimentos :: Jogo -> [Movimento] -> Jogo
 correrMovimentos jogo [] = jogo
 correrMovimentos jogo (x:xs) = correrMovimentos (moveJogador jogo x) xs
 
+-- | __Função que aplica apenas um Movimento a um Jogo, devolvendo o Jogo após as alterações impostas pelo Movimento.
 moveJogador :: Jogo -> Movimento -> Jogo 
 moveJogador (Jogo mapa (Jogador (x,y) dir caixa)) move 
     |move == AndarDireita = if caminhobloqueadoD (Jogo mapa (Jogador (x,y) dir caixa)) == False then cair (Jogo mapa(Jogador (x+1,y) Este caixa)) (AndarDireita) else (Jogo mapa (Jogador (x,y) dir caixa))
@@ -23,50 +25,60 @@ moveJogador (Jogo mapa (Jogador (x,y) dir caixa)) move
     |move == Trepar = (Jogo mapa (trepa (decontroiMapa mapa) (Jogador (x,y) dir caixa))) 
     |otherwise = (Jogo mapa (Jogador (x,y) dir caixa)) -- interagecaixa is Out of Service
 
+-- |Função que verifica se há espaço para avançar à direita.
 caminhobloqueadoD :: Jogo -> Bool
 caminhobloqueadoD (Jogo mapa (Jogador (x,y) dir caixa)) = camBloqD (decontroiMapa mapa) (Jogador (x,y) dir caixa)
 
+-- |Função auxiliar que recebe a lista com as peças e verifica se existe alguma peça à direita do jogador.
 camBloqD :: [(Peca,Coordenadas)] -> Jogador -> Bool
 camBloqD [] (Jogador (x,y) dir caixa) = False
 camBloqD ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
     |(a == x+1 && b == y) && (h==Caixa || h==Bloco) = True
     |otherwise = camBloqD t (Jogador (x,y) dir caixa) 
 
+-- |Função que verifica se há espaço para avançar à esquerda.
 caminhobloqueadoE :: Jogo -> Bool
 caminhobloqueadoE (Jogo mapa (Jogador (x,y) dir caixa)) = camBloqE (decontroiMapa mapa) (Jogador (x,y) dir caixa)
 
+-- |Função auxiliar que recebe a lista com as peças e verifica se existe alguma peça à esquerda do jogador.
 camBloqE :: [(Peca,Coordenadas)] -> Jogador -> Bool
 camBloqE [] (Jogador (x,y) dir caixa) = False
 camBloqE ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
     |(a == x-1 && b == y) && (h==Caixa || h==Bloco) = True
     |otherwise = camBloqE t (Jogador (x,y) dir caixa) 
 
+-- |Função que vai verificar se um Jogador tem algo para apoiar os pés.
 cair :: Jogo -> Movimento -> Jogo
 cair (Jogo mapa (Jogador (x,y) dir caixa)) move = (Jogo mapa (cair' (decontroiMapa mapa) (Jogador (x,y) dir caixa)))
 
+-- |Função que vai fazer o jogador cair sempre que este não tenha uma peça por baixo.
 cair' :: [(Peca,Coordenadas)] -> Jogador -> Jogador
 cair' l (Jogador (x,y) dir caixa)
     |(Jogador (x,y) dir caixa) /= cair'' l (Jogador (x,y) dir caixa) = cair' l (cair'' l (Jogador (x,y+1) dir caixa))
     |otherwise = (Jogador (x,y) dir caixa)
 
+-- |Função que procura a peça imediatamente abaixo do jogador.
 cair'' :: [(Peca,Coordenadas)] -> Jogador -> Jogador
 cair'' [] (Jogador (x,y) dir caixa) = (Jogador (x,y+1) dir caixa)
 cair'' ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
     |a==x && b == (y+1) = (Jogador (x,y) dir caixa)
     |otherwise = cair'' t (Jogador (x,y) dir caixa)
 
+-- |Função que calcula o Movimento Trepar caso o obstaculo esteja a esquerda ou à direita do Jogador.
 trepa :: [(Peca,Coordenadas)] -> Jogador -> Jogador
 trepa [] (Jogador (x,y) dir caixa) = (Jogador (x,y) dir caixa)
 trepa ((h,(a,b)):t) (Jogador (x,y) dir caixa)
     |dir == Oeste = trepaEsq ((h,(a,b)):t) (Jogador (x,y) dir caixa)
     |otherwise = trepaDir ((h,(a,b)):t) (Jogador (x,y) dir caixa)     
 
+-- |Função que calcula o Movimento Trepar à esquerda do Jogador.
 trepaEsq :: [(Peca,Coordenadas)] -> Jogador -> Jogador
 trepaEsq [] (Jogador (x,y) dir caixa) = (Jogador (x,y) dir caixa)
 trepaEsq ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
                 |a==(x-1) && b==y = (Jogador (x-1,y-1) dir caixa)
                 |otherwise = trepaEsq t (Jogador (x,y) dir caixa)
 
+-- |Função que calcula o Movimento Trepar à direita do Jogador.
 trepaDir :: [(Peca,Coordenadas)] -> Jogador -> Jogador
 trepaDir [] (Jogador (x,y) dir caixa) = (Jogador (x,y) dir caixa)
 trepaDir ((h,(a,b)):t) (Jogador (x,y) dir caixa) 

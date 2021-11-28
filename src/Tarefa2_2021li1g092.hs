@@ -11,10 +11,12 @@ module Tarefa2_2021li1g092 where
 import LI12122
 import Funcoesuteis
 
+{- | __Funçao que recebe uma lista de peças com as respetivas coordenadas e devolve um Mapa.__ -}
 constroiMapa :: [(Peca, Coordenadas)] -> Mapa
 constroiMapa pecas = undefined
 
-
+{- | __Funçao que recebe um mapa e devolve uma lista de peças com as respetivas coordenadas.
+    Esta função utilisa acumuladores.__ -}
 desconstroiMapa :: Mapa -> [(Peca, Coordenadas)]
 desconstroiMapa mapa = desconstroiMapa' (0,0) mapa  
 
@@ -24,6 +26,4 @@ desconstroiMapa' (x,y) ([]:xs)  = desconstroiMapa' (0,y+1) xs
 desconstroiMapa' (x,y) ((h:t) : xs)   
     |h == Vazio = desconstroiMapa' (x+1,y) (t:xs) 
     |otherwise = (h,(x,y)) : desconstroiMapa'  (x+1,y) (t:xs)
-
-
 
