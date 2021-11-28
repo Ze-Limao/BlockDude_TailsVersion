@@ -83,6 +83,4 @@ insertAt (x:xs) elem pos
     | pos == 0 = elem : xs
     | pos > 0 = x : insertAt xs elem (pos - 1) 
     | otherwise = x : insertAt xs elem ((pos) + length (x:xs) )
-
--- Tarefa4: 
-
+    
