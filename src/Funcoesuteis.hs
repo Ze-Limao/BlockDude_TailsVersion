@@ -29,7 +29,6 @@ altura ((a, (b, c)) : (d, (e, f)) : xs)
   | c >= f = altura ((a, (b, c)) : xs)
   | otherwise = altura ((d, (e, f)) : xs)
 
-
 {- |
 @
 lowerblock :: [(Peca, Coordenadas)] -> (Peca, Coordenadas)
