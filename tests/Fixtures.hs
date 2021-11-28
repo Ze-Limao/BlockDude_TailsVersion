@@ -32,3 +32,22 @@ m1e1 = Jogo m1r (Jogador (6, 0) Oeste False)
 
 m1e2 :: Jogo
 m1e2 = Jogo m1r (Jogador (2, 3) Oeste False)
+
+m1e3 :: Jogo
+m1e3 = Jogo m1r (Jogador (2, 3) Este False)
+
+m1e4 :: Jogo
+m1e4 = Jogo m1r (Jogador (6,1) Oeste False)
+
+m1e5 :: Jogo 
+m1e5 = Jogo m2r (Jogador (2,3) Oeste True)
+
+m2r :: Mapa
+m2r =
+  [ [Vazio, Vazio, Vazio, Vazio, Vazio, Vazio, Vazio],
+    [Vazio, Vazio, Vazio, Vazio, Vazio, Vazio, Bloco],
+    [Vazio, Vazio, Caixa, Vazio, Vazio, Vazio, Bloco],
+    [Porta, Vazio, Vazio, Vazio, Caixa, Vazio, Bloco],
+    [Bloco, Bloco, Bloco, Bloco, Bloco, Bloco, Bloco]
+  ] 
+  
