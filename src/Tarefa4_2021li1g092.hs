@@ -23,7 +23,7 @@ moveJogador (Jogo mapa (Jogador (x,y) dir caixa)) move
     |move == AndarDireita = if caminhobloqueadoD (Jogo mapa (Jogador (x,y) dir caixa)) == False then cair (Jogo mapa(Jogador (x+1,y) Este caixa)) (AndarDireita) else (Jogo mapa (Jogador (x,y) dir caixa))
     |move == AndarEsquerda = if caminhobloqueadoE (Jogo mapa (Jogador (x,y) dir caixa)) == False then cair (Jogo mapa(Jogador (x-1,y) Oeste caixa)) (AndarEsquerda) else (Jogo mapa (Jogador (x,y) dir caixa))
     |move == Trepar = (Jogo mapa (trepa (decontroiMapa mapa) (Jogador (x,y) dir caixa))) 
-    |otherwise = (Jogo mapa (Jogador (x,y) dir caixa)) -- interagecaixa is Out of Service
+    |otherwise = (Jogo mapa (Jogador (x,y) dir caixa)) --(Jogo mapa (interagircaixa (decontroiMapa mapa) (Jogador (x,y) dir caixa))) 
 
 -- |Função que verifica se há espaço para avançar à direita.
 caminhobloqueadoD :: Jogo -> Bool
@@ -68,19 +68,45 @@ cair'' ((h,(a,b)):t) (Jogador (x,y) dir caixa)
 trepa :: [(Peca,Coordenadas)] -> Jogador -> Jogador
 trepa [] (Jogador (x,y) dir caixa) = (Jogador (x,y) dir caixa)
 trepa ((h,(a,b)):t) (Jogador (x,y) dir caixa)
-    |dir == Oeste = trepaEsq ((h,(a,b)):t) (Jogador (x,y) dir caixa)
-    |otherwise = trepaDir ((h,(a,b)):t) (Jogador (x,y) dir caixa)     
+    |dir == Oeste = trepaEsq (reverse((h,(a,b)):t)) (Jogador (x,y) dir caixa)
+    |otherwise = trepaDir (reverse((h,(a,b)):t)) (Jogador (x,y) dir caixa)     
 
 -- |Função que calcula o Movimento Trepar à esquerda do Jogador.
 trepaEsq :: [(Peca,Coordenadas)] -> Jogador -> Jogador
 trepaEsq [] (Jogador (x,y) dir caixa) = (Jogador (x,y) dir caixa)
 trepaEsq ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
-                |a==(x-1) && b==y = (Jogador (x-1,y-1) dir caixa)
-                |otherwise = trepaEsq t (Jogador (x,y) dir caixa)
+    |(h==Bloco && (a==(x-1) && b==y )) || (h==Caixa && (a==(x-1) && b==y))= trepaEsq' ((h,(a,b)):t) (Jogador (x,y) dir caixa)
+    |otherwise = trepaEsq t (Jogador (x,y) dir caixa)
+
+trepaEsq' :: [(Peca,Coordenadas)] -> Jogador -> Jogador
+trepaEsq' [] (Jogador (x,y) dir caixa) = (Jogador (x-1,y-1) dir caixa)
+trepaEsq' ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
+    |a==(x-1) && b==(y-1) = (Jogador (x,y) dir caixa)
+    |otherwise = trepaEsq' t (Jogador (x,y) dir caixa) 
 
 -- |Função que calcula o Movimento Trepar à direita do Jogador.
 trepaDir :: [(Peca,Coordenadas)] -> Jogador -> Jogador
 trepaDir [] (Jogador (x,y) dir caixa) = (Jogador (x,y) dir caixa)
 trepaDir ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
-                |a==(x+1) && b==y = (Jogador (x+1,y-1) dir caixa)
-                |otherwise = trepaDir t (Jogador (x,y) dir caixa)        
+    |(h==Bloco && (a==(x+1) && b==y )) || (h==Caixa && (a==(x+1) && b==y))= trepaDir' ((h,(a,b)):t) (Jogador (x,y) dir caixa)
+    |otherwise = trepaDir t (Jogador (x,y) dir caixa)
+
+trepaDir' :: [(Peca,Coordenadas)] -> Jogador -> Jogador
+trepaDir' [] (Jogador (x,y) dir caixa) = (Jogador (x+1,y-1) dir caixa)
+trepaDir' ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
+    |a==(x+1) && b==(y-1) = (Jogador (x,y) dir caixa)
+    |otherwise = trepaDir' t (Jogador (x,y) dir caixa)     
+{-
+interagircaixa :: Jogo -> Jogo
+
+}
+interact :: Jogo -> Bool --verifica se pode interagir
+interact (Jogo mapa (Jogador (x,y) dir caixa)) 
+    |dir == Oeste = interactWest (Jogo mapa (Jogador (x,y) dir caixa))
+    |otherwise = interactEast (Jogo mapa (Jogador (x,y) dir caixa))
+
+
+boxWest :: (Peca, Coordenadas) -> Jogador -> Bool
+boxWest (a, (b, c))  (Jogador (x,y) dir caixa)
+  |b == e && c == f-1 = True
+-}
