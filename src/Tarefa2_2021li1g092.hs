@@ -13,7 +13,20 @@ import Funcoesuteis
 
 {- | __Funçao que recebe uma lista de peças com as respetivas coordenadas e devolve um Mapa.__ -}
 constroiMapa :: [(Peca, Coordenadas)] -> Mapa
-constroiMapa pecas = undefined
+constroiMapa [] = [[]]
+constroiMapa ((h,(a,b)):t) = [constroiMapa'' (0,y) (linha y ((h,(a,b)):t)) | y <-[0..(altura((h,(a,b)):t))]]  
+
+constroiMapa'' :: Coordenadas -> [(Peca,Coordenadas)] -> [Peca]
+constroiMapa'' (n,m) [] = []
+constroiMapa'' (n,m) ((h,(x,y)):t)
+    |n==x = h : constroiMapa'' ((n+1),y) t 
+    |otherwise = Vazio : constroiMapa'' ((n+1),y) ((h,(x,y)):t)
+
+
+linha :: Int -> [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
+linha _ [] = []
+linha n ((h,(a,b)):t) = if n==b then (h,(a,b)) : linha n t else linha n t
+
 
 {- | __Funçao que recebe um mapa e devolve uma lista de peças com as respetivas coordenadas.
     Esta função utilisa acumuladores.__ -}
