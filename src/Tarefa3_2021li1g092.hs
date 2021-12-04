@@ -24,7 +24,8 @@ jogo mapa (Jogador (x,y) dir caixa)
 
 -- |Função que insere o Jogador na string.
 jogo' :: String -> Jogador -> String 
-jogo' str (Jogador (x,y) dir caixa) = insertAt str (direcaodude (Jogador (x,y) dir caixa)) (posicaodude str (Jogador (x,y) dir caixa))
+jogo' str (Jogador (x,y) dir False) = insertAt str (direcaodude (Jogador (x,y) dir False)) (posicaodude str (Jogador (x,y) dir False))
+jogo' str (Jogador (x,y) dir True) = insertAt (jogo' str (Jogador (x,y) dir False)) 'C' (posicaodude str (Jogador (x,y-1) dir True))
 
 -- |Função que nos diz onde o Jogador vai ser inserido na string.
 posicaodude :: String -> Jogador -> Int

@@ -23,7 +23,7 @@ moveJogador (Jogo mapa (Jogador (x,y) dir caixa)) move
     |move == AndarDireita = if caminhobloqueadoD (Jogo mapa (Jogador (x,y) dir caixa)) == False then cair (Jogo mapa(Jogador (x+1,y) Este caixa)) (AndarDireita) else (Jogo mapa (Jogador (x,y) dir caixa))
     |move == AndarEsquerda = if caminhobloqueadoE (Jogo mapa (Jogador (x,y) dir caixa)) == False then cair (Jogo mapa(Jogador (x-1,y) Oeste caixa)) (AndarEsquerda) else (Jogo mapa (Jogador (x,y) dir caixa))
     |move == Trepar = (Jogo mapa (trepa (decontroiMapa mapa) (Jogador (x,y) dir caixa))) 
-    |otherwise = (Jogo mapa (Jogador (x,y) dir caixa)) --(Jogo mapa (interagircaixa (decontroiMapa mapa) (Jogador (x,y) dir caixa))) 
+    |otherwise = interagircaixa (Jogo mapa (Jogador (x,y) dir caixa)) 
 
 -- |Função que verifica se há espaço para avançar à direita.
 caminhobloqueadoD :: Jogo -> Bool
@@ -96,17 +96,67 @@ trepaDir' [] (Jogador (x,y) dir caixa) = (Jogador (x+1,y-1) dir caixa)
 trepaDir' ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
     |a==(x+1) && b==(y-1) = (Jogador (x,y) dir caixa)
     |otherwise = trepaDir' t (Jogador (x,y) dir caixa)     
-{-
+
+
+-- |Funcao interagir caixa
 interagircaixa :: Jogo -> Jogo
+interagircaixa (Jogo mapa (Jogador (x,y) dir True)) = dropbox (Jogo mapa (Jogador (x,y) dir True))
+interagircaixa (Jogo mapa (Jogador (x,y) dir False)) = (Jogo mapa (pickupbox (Jogo mapa (Jogador (x,y) dir False))))
 
-}
-interact :: Jogo -> Bool --verifica se pode interagir
-interact (Jogo mapa (Jogador (x,y) dir caixa)) 
-    |dir == Oeste = interactWest (Jogo mapa (Jogador (x,y) dir caixa))
-    |otherwise = interactEast (Jogo mapa (Jogador (x,y) dir caixa))
+dropBox :: Jogo -> Jogo
+dropBox (Jogo mapa (Jogador (x,y) dir caixa)) 
+    |dir == Oeste = dropWest (decontroiMapa mapa) (Jogador (x,y) dir caixa)
+    |otherwise = dropEast (decontroiMapa mapa) (Jogador (x,y) dir caixa)
 
+dropWest :: [(Peca,Coordenadas)] -> Jogador -> Jogo
+dropWest [] (Jogador (x,y) dir caixa) = dropWest' ((h,(a,b)):t) (Jogador (x,y) dir caixa)
+dropWest ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
+    |(a==(x-1) && b==(y-1)= (Jogo mapa (Jogador (x,y) dir caixa)) --muro
+    |(h==Porta && (a==(x-1) && b==y) = (Jogo mapa (Jogador (x,y) dir caixa)) --porta a frente
+    |otherwise = dropWest t (Jogador (x,y) dir caixa)
 
-boxWest :: (Peca, Coordenadas) -> Jogador -> Bool
-boxWest (a, (b, c))  (Jogador (x,y) dir caixa)
-  |b == e && c == f-1 = True
--}
+dropWest' :: [(Peca,Coordenadas)] -> Jogador -> Jogo
+dropWest' ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
+    |dropWest'' == True = (Jogo (inserircaixa ))
+    |otherwise = dropWest' ((h,(a,b)):t) (Jogador (x,y+1) dir caixa)
+
+dropWest'' :: [(Peca,Coordenadas)] -> Jogador -> Bool
+dropWest'' [] (Jogador (x,y) dir caixa) = False
+dropWest'' ((h,(a,b)):t) (Jogador (x,y) dir caixa)
+        |y == altura((h,(a,b)):t) = False
+        |(h==Bloco && (a==(x-1) && b==(y+1))) || (h==Caixa && (a==(x-1) && b==(y+1)) = True
+        |otherwise = dropWest'' t (Jogador (x,y) dir caixa) 
+
+inserircaixa
+
+pickupbox :: Jogo -> Jogador
+pickupbox (Jogo mapa (Jogador (x,y) dir False)) = if pick(Jogo mapa (Jogador (x,y) dir False)) == True then (Jogador (x,y) dir True) else (Jogador (x,y) dir False)
+
+pick :: Jogo -> Bool --verifica se pode interagir
+pick (Jogo mapa (Jogador (x,y) dir caixa)) 
+    |dir == Oeste = pickWest (reverse(decontroiMapa mapa)) (Jogador (x,y) dir caixa)
+    |otherwise = pickEast (reverse(decontroiMapa mapa)) (Jogador (x,y) dir caixa)
+
+pickWest :: [(Peca,Coordenadas)] -> Jogador -> Bool
+pickWest [] (Jogador (x,y) dir caixa) = False
+pickWest ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
+    |h==Caixa && (a==(x-1) && b==y)= pickWest' ((h,(a,b)):t) (Jogador (x,y) dir caixa)
+    |otherwise = pickWest t (Jogador (x,y) dir caixa)
+
+pickWest' :: [(Peca,Coordenadas)] -> Jogador -> Bool
+pickWest' [] (Jogador (x,y) dir caixa) = True
+pickWest' ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
+    |a==(x-1) && b==(y-1) = False
+    |otherwise = pickWest' t (Jogador (x,y) dir caixa)
+
+pickEast :: [(Peca,Coordenadas)] -> Jogador -> Bool
+pickEast [] (Jogador (x,y) dir caixa) = False
+pickEast ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
+    |h==Caixa && (a==(x+1) && b==y)= pickEast' ((h,(a,b)):t) (Jogador (x,y) dir caixa)
+    |otherwise = pickEast t (Jogador (x,y) dir caixa)
+
+pickEast' :: [(Peca,Coordenadas)] -> Jogador -> Bool
+pickEast' [] (Jogador (x,y) dir caixa) = True
+pickEast' ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
+    |a==(x+1) && b==(y-1) = False
+    |otherwise = pickEast' t (Jogador (x,y) dir caixa)
