@@ -14,14 +14,17 @@ import Funcoesuteis
 {- | __Funçao que recebe uma lista de peças com as respetivas coordenadas e devolve um Mapa.__ -}
 constroiMapa :: [(Peca, Coordenadas)] -> Mapa
 constroiMapa [] = [[]]
-constroiMapa ((h,(a,b)):t) = [constroiMapa'' (0,y) (linhA y ((h,(a,b)):t)) | y <-[0..(altura((h,(a,b)):t))]]  
+constroiMapa ((h,(a,b)):t) = [constroiMapa'' (0,y) (linhaordenada y ((h,(a,b)):t)) | y <-[0..(altura((h,(a,b)):t))]]  
 
 constroiMapa'' :: Coordenadas -> [(Peca,Coordenadas)] -> [Peca]
 constroiMapa'' (n,m) [] = []
 constroiMapa'' (n,m) ((h,(x,y)):t)
-    |n==x = h : constroiMapa'' ((n+1),m) t 
+    |n==x = h : constroiMapa'' ((n+1),m) t
     |otherwise = Vazio : constroiMapa'' ((n+1),m) ((h,(x,y)):t)
 
+linhaordenada :: Int -> [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
+linhaordenada _ [] = []
+linhaordenada n ((h,(a,b)):t) = ordenaC (linhA n ((h,(a,b)):t))
 
 linhA :: Int -> [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
 linhA _ [] = []
