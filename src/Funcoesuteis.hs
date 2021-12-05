@@ -166,8 +166,8 @@ controimapa ((h,(a,b)):t) = [controimapa'' (0,y) (linha y ((h,(a,b)):t)) | y <-[
 controimapa'' :: Coordenadas -> [(Peca,Coordenadas)] -> [Peca]
 controimapa'' (n,m) [] = []
 controimapa'' (n,m) ((h,(x,y)):t)
-    |n==x = h : controimapa'' ((n+1),y) t 
-    |otherwise = Vazio : controimapa'' ((n+1),y) ((h,(x,y)):t)
+    |n==x = h : controimapa'' ((n+1),m) t 
+    |otherwise = Vazio : controimapa'' ((n+1),m) ((h,(x,y)):t)
 
 -- |yup escreve algo um certo numero de vezes
 
