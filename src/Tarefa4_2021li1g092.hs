@@ -10,6 +10,7 @@ module Tarefa4_2021li1g092 where
 
 import Funcoesuteis
 import LI12122
+import Tarefa2_2021li1g092
 import Tarefa3_2021li1g092
 
 -- | __Função que aplica uma lista de Movimentos a um Jogo, devolvendo o Jogo após as alterações impostas por os movimentos.
@@ -98,13 +99,12 @@ trepaDir' ((h,(a,b)):t) (Jogador (x,y) dir caixa)
     |otherwise = trepaDir' t (Jogador (x,y) dir caixa)     
 
 
--- |Funcao interagir caixa
+-- |Funcao interagir caixa (Esta funcao nao funciona para mapas com linhas vazias)
 interagircaixa :: Jogo -> Jogo
 interagircaixa (Jogo mapa (Jogador (x,y) dir True)) = dropBox (Jogo mapa (Jogador (x,y) dir True))
-interagircaixa (Jogo mapa (Jogador (x,y) dir False)) = (Jogo mapa (pickupbox (Jogo mapa (Jogador (x,y) dir False))))
+interagircaixa (Jogo mapa (Jogador (x,y) dir False)) = pickupbox (Jogo mapa (Jogador (x,y) dir False))
 
-
-
+-- |Funcao drop box 
 
 dropBox :: Jogo -> Jogo
 dropBox (Jogo mapa (Jogador (x,y) dir caixa)) 
@@ -114,7 +114,7 @@ dropBox (Jogo mapa (Jogador (x,y) dir caixa))
 dropWest :: [(Peca,Coordenadas)] -> Jogador -> Jogo
 dropWest ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
     |auxW ((h,(a,b)):t) (Jogador (x,y) dir caixa) == True = dropWest' ((h,(a,b)):t) (Jogador (x,y) dir caixa)
-    |otherwise = (Jogo (controimapa ((h,(a,b)):t)) (Jogador (x,y) dir caixa))
+    |otherwise = (Jogo (constroiMapa ((h,(a,b)):t)) (Jogador (x,y) dir caixa))
 
 auxW :: [(Peca,Coordenadas)] -> Jogador -> Bool
 auxW [] (Jogador (x,y) dir caixa) = True
@@ -124,7 +124,7 @@ auxW ((h,(a,b)):t) (Jogador (x,y) dir caixa)
     |otherwise = auxW t (Jogador (x,y) dir caixa)
 
 dropWest' :: [(Peca,Coordenadas)] -> Jogador -> Jogo
-dropWest' ((h,(a,b)):t) (Jogador (x,y) dir caixa) = (Jogo (controimapa (inserircaixaW ((h,(a,b)):t) (Jogador (x,y) dir caixa))) (Jogador (x,y) dir False)) --inserir a caixa
+dropWest' ((h,(a,b)):t) (Jogador (x,y) dir caixa) = (Jogo (constroiMapa (inserircaixaW ((h,(a,b)):t) (Jogador (x,y) dir caixa))) (Jogador (x,y) dir False)) --inserir a caixa
 
 inserircaixaW :: [(Peca,Coordenadas)] -> Jogador -> [(Peca,Coordenadas)]
 inserircaixaW ((h,(a,b)):t) (Jogador (x,y) dir caixa)
@@ -139,25 +139,10 @@ inserircaixaW' ((h,(a,b)):t) (Jogador (x,y) dir caixa)
     |otherwise = inserircaixaW' t (Jogador (x,y) dir caixa)
 
 
-ordenaC :: [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
-ordenaC [] = []
-ordenaC [(h,(a,b))] = [(h,(a,b))]
-ordenaC ((h1,(a1,b1)):(h2,(a2,b2)):t)
-    |a1 <= a2 = (h1,(a1,b1)) : ordenaC ((h2,(a2,b2)):t)
-    |a1 > a2 = ordenaC (ordenaC' (h1,(a1,b1)) ((h2,(a2,b2)):t))
-
-ordenaC' :: (Peca,Coordenadas) -> [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
-ordenaC' (h1,(a1,b1)) [] = []
-ordenaC' (h1,(a1,b1)) ((h2,(a2,b2)):(h3,(a3,b3)):t)
-    |a1<=a2 = (h1,(a1,b1)) : ((h2,(a2,b2)):(h3,(a3,b3)):t)
-    |a1>a2 && a1 < a3 = (h2,(a2,b2)):(h1,(a1,b1)):((h3,(a3,b3)):t)
-    |otherwise = (h2,(a2,b2)) : ordenaC' (h1,(a1,b1)) ((h3,(a3,b3)):t)
-
-
 dropEast :: [(Peca,Coordenadas)] -> Jogador -> Jogo
 dropEast ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
     |auxE ((h,(a,b)):t) (Jogador (x,y) dir caixa) == True = dropEast' ((h,(a,b)):t) (Jogador (x,y) dir caixa)
-    |otherwise = (Jogo (controimapa ((h,(a,b)):t))(Jogador (x,y) dir caixa))
+    |otherwise = (Jogo (constroiMapa ((h,(a,b)):t))(Jogador (x,y) dir caixa))
 
 auxE :: [(Peca,Coordenadas)] -> Jogador -> Bool
 auxE [] (Jogador (x,y) dir caixa) = True
@@ -167,7 +152,7 @@ auxE ((h,(a,b)):t) (Jogador (x,y) dir caixa)
     |otherwise = auxE t (Jogador (x,y) dir caixa)
 
 dropEast' :: [(Peca,Coordenadas)] -> Jogador -> Jogo
-dropEast' ((h,(a,b)):t) (Jogador (x,y) dir caixa) = (Jogo (controimapa (inserircaixaE ((h,(a,b)):t) (Jogador (x,y) dir caixa))) (Jogador (x,y) dir False)) --inserir a caixa
+dropEast' ((h,(a,b)):t) (Jogador (x,y) dir caixa) = (Jogo (constroiMapa (inserircaixaE ((h,(a,b)):t) (Jogador (x,y) dir caixa))) (Jogador (x,y) dir False)) --inserir a caixa
 
 inserircaixaE :: [(Peca,Coordenadas)] -> Jogador -> [(Peca,Coordenadas)]
 inserircaixaE ((h,(a,b)):t) (Jogador (x,y) dir caixa)
@@ -185,8 +170,8 @@ inserircaixaE' ((h,(a,b)):t) (Jogador (x,y) dir caixa)
 -- |pickbox
 
 
-pickupbox :: Jogo -> Jogador
-pickupbox (Jogo mapa (Jogador (x,y) dir False)) = if pick(Jogo mapa (Jogador (x,y) dir False)) == True then (Jogador (x,y) dir True) else (Jogador (x,y) dir False)
+pickupbox :: Jogo -> Jogo
+pickupbox (Jogo mapa (Jogador (x,y) dir False)) = if pick(Jogo mapa (Jogador (x,y) dir False)) == True then (Jogo (removebox (decontroiMapa mapa) (Jogador (x,y) dir True)) (Jogador (x,y) dir True)) else (Jogo mapa (Jogador (x,y) dir False))
 
 pick :: Jogo -> Bool --verifica se pode interagir
 pick (Jogo mapa (Jogador (x,y) dir caixa)) 
@@ -216,3 +201,19 @@ pickEast' [] (Jogador (x,y) dir caixa) = True
 pickEast' ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
     |a==(x+1) && b==(y-1) = False
     |otherwise = pickEast' t (Jogador (x,y) dir caixa)
+
+
+removebox :: [(Peca,Coordenadas)] -> Jogador -> Mapa
+removebox ((h,(a,b)):t) (Jogador (x,y) Oeste caixa) = constroiMapa (removeW ((h,(a,b)):t) (Jogador (x,y) Oeste caixa))
+removebox ((h,(a,b)):t) (Jogador (x,y) Este caixa) = constroiMapa (removeE ((h,(a,b)):t) (Jogador (x,y) Este caixa))
+
+
+removeW :: [(Peca,Coordenadas)] -> Jogador -> [(Peca,Coordenadas)]
+removeW ((h,(a,b)):(i,(c,d)):t) (Jogador (x,y) dir caixa)
+    |a==x-1 && b==y = ((i,(c,d)): t)
+    |otherwise = (h,(a,b)) : removeW ((i,(c,d)): t) (Jogador (x,y) dir caixa)
+
+removeE :: [(Peca,Coordenadas)] -> Jogador -> [(Peca,Coordenadas)]
+removeE ((h,(a,b)):(i,(c,d)):t) (Jogador (x,y) dir caixa)
+    |a==x+1 && b==y = ((i,(c,d)): t)
+    |otherwise = (h,(a,b)) : removeE ((i,(c,d)): t) (Jogador (x,y) dir caixa)
