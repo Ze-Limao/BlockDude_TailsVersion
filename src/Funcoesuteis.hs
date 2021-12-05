@@ -174,3 +174,13 @@ controimapa'' (n,m) ((h,(x,y)):t)
 yup :: Int -> a -> [a]
 yup 0 a = []
 yup n a = a : yup (n-1) a 
+
+ordenaC :: [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
+ordenaC [] = []
+ordenaC ((h1,(a1,b1)):t) = ordenaC' (h1,(a1,b1)) (ordenaC t) 
+
+ordenaC' :: (Peca,Coordenadas) -> [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
+ordenaC' (h1,(a1,b1)) [] = [(h1,(a1,b1))]
+ordenaC' (h1,(a1,b1)) ((h2,(a2,b2)):t)
+  |a1 > a2 = (h2,(a2,b2)) : ordenaC' (h1,(a1,b1)) t
+  |otherwise = (h1,(a1,b1)) : (h2,(a2,b2)) : t
