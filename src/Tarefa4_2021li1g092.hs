@@ -99,7 +99,7 @@ trepaDir' ((h,(a,b)):t) (Jogador (x,y) dir caixa)
     |otherwise = trepaDir' t (Jogador (x,y) dir caixa)     
 
 
--- |Funcao interagir caixa (Esta funcao nao funciona para mapas com linhas vazias)
+-- |Funcao interagir caixa 
 interagircaixa :: Jogo -> Jogo
 interagircaixa (Jogo mapa (Jogador (x,y) dir True)) = dropBox (Jogo mapa (Jogador (x,y) dir True))
 interagircaixa (Jogo mapa (Jogador (x,y) dir False)) = pickupbox (Jogo mapa (Jogador (x,y) dir False))

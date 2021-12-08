@@ -155,26 +155,13 @@ insertAt (x:xs) elem pos
     | pos > 0 = x : insertAt xs elem (pos - 1) 
     | otherwise = x : insertAt xs elem ((pos) + length (x:xs) )
 
-linha :: Int -> [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
-linha _ [] = []
-linha n ((h,(a,b)):t) = if n==b then (h,(a,b)) : linha n t else linha n t
-
-controimapa :: [(Peca,Coordenadas)] -> Mapa
-controimapa [] = [[]]
-controimapa ((h,(a,b)):t) = [controimapa'' (0,y) (linha y ((h,(a,b)):t)) | y <-[0..(altura((h,(a,b)):t))]]  
-
-controimapa'' :: Coordenadas -> [(Peca,Coordenadas)] -> [Peca]
-controimapa'' (n,m) [] = []
-controimapa'' (n,m) ((h,(x,y)):t)
-    |n==x = h : controimapa'' ((n+1),m) t 
-    |otherwise = Vazio : controimapa'' ((n+1),m) ((h,(x,y)):t)
-
 -- |yup escreve algo um certo numero de vezes
 
 yup :: Int -> a -> [a]
 yup 0 a = []
 yup n a = a : yup (n-1) a 
 
+-- |ordena listas de pecas da mesma linha
 ordenaC :: [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
 ordenaC [] = []
 ordenaC ((h1,(a1,b1)):t) = ordenaC' (h1,(a1,b1)) (ordenaC t) 
@@ -184,3 +171,5 @@ ordenaC' (h1,(a1,b1)) [] = [(h1,(a1,b1))]
 ordenaC' (h1,(a1,b1)) ((h2,(a2,b2)):t)
   |a1 > a2 = (h2,(a2,b2)) : ordenaC' (h1,(a1,b1)) t
   |otherwise = (h1,(a1,b1)) : (h2,(a2,b2)) : t
+
+--Tarefa 5:
