@@ -16,9 +16,23 @@ import Funcoesuteis
 -}
 validaPotencialMapa :: [(Peca, Coordenadas)] -> Bool
 validaPotencialMapa [] = False 
-validaPotencialMapa ((p,(x,y)):t) 
-    |contador Porta ((p,(x,y)):t) == 1 && emptyspace ((p,(x,y)):t) == True = caixaNvoa ((p,(x,y)):t) && chao ((p,(x,y)):t)
+validaPotencialMapa l@((p,(x,y)):t) 
+    |norepeat l == True && contador Porta l == 1 && emptyspace l == True = caixaNvoa l && chao l
     |otherwise = False
+
+-- |Verifica se existem peças repetidas.
+norepeat :: [(Peca, Coordenadas)] -> Bool
+norepeat ((p,(x,y)):t) = if [pecaigual a ((p,(x,y)):t) | a <-((p,(x,y)):t)] == [setOne a ((p,(x,y)):t) | a <-((p,(x,y)):t)] then True else False
+
+-- |Verifica as vezes que existe uma peca numa lista.
+pecaigual :: (Peca, Coordenadas) -> [(Peca, Coordenadas)] -> Int
+pecaigual _ [] = 0
+pecaigual (p,(x,y)) ((p1,(x1,y1)):t) 
+    |(x == x1 && y==y1) = 1 + pecaigual (p,(x,y)) t
+    |otherwise = pecaigual (p,(x,y)) t
+
+setOne :: (Peca, Coordenadas) -> [(Peca, Coordenadas)] -> Int
+setOne (p,(x,y)) ((p1,(x1,y1)):t) = 1 
 
 -- |Conta as vezes que um tipo determinado de peça ocorre numa lista de peças.
 contador :: Peca -> [(Peca,Coordenadas)] -> Int
