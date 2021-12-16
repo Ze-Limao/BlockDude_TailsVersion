@@ -21,8 +21,8 @@ correrMovimentos jogo (x:xs) = correrMovimentos (moveJogador jogo x) xs
 -- | __Função que aplica apenas um Movimento a um Jogo, devolvendo o Jogo após as alterações impostas pelo Movimento.
 moveJogador :: Jogo -> Movimento -> Jogo 
 moveJogador (Jogo mapa (Jogador (x,y) dir caixa)) move 
-    |move == AndarDireita = if caminhobloqueadoD (Jogo mapa (Jogador (x,y) dir caixa)) == False then cair (Jogo mapa(Jogador (x+1,y) Este caixa)) (AndarDireita) else (Jogo mapa (Jogador (x,y) dir caixa))
-    |move == AndarEsquerda = if caminhobloqueadoE (Jogo mapa (Jogador (x,y) dir caixa)) == False then cair (Jogo mapa(Jogador (x-1,y) Oeste caixa)) (AndarEsquerda) else (Jogo mapa (Jogador (x,y) dir caixa))
+    |move == AndarDireita = if caminhobloqueadoD (Jogo mapa (Jogador (x,y) dir caixa)) == False then cair (Jogo mapa(Jogador (x+1,y) Este caixa)) (AndarDireita) else (Jogo mapa (Jogador (x,y) Este caixa))
+    |move == AndarEsquerda = if caminhobloqueadoE (Jogo mapa (Jogador (x,y) dir caixa)) == False then cair (Jogo mapa(Jogador (x-1,y) Oeste caixa)) (AndarEsquerda) else (Jogo mapa (Jogador (x,y) Oeste caixa))
     |move == Trepar = (Jogo mapa (trepa (decontroiMapa mapa) (Jogador (x,y) dir caixa))) 
     |otherwise = interagircaixa (Jogo mapa (Jogador (x,y) dir caixa)) 
 
@@ -157,13 +157,13 @@ dropEast' ((h,(a,b)):t) (Jogador (x,y) dir caixa) = (Jogo (constroiMapa (inserir
 inserircaixaE :: [(Peca,Coordenadas)] -> Jogador -> [(Peca,Coordenadas)]
 inserircaixaE ((h,(a,b)):t) (Jogador (x,y) dir caixa)
     |y == ((altura ((h,(a,b)):t))+1) = ((h,(a,b)):t)
-    |inserircaixaE'((h,(a,b)):t) (Jogador (x,y) dir caixa) == True = ordenaC ((Caixa ,(x+1,y)):((h,(a,b)):t))
+    |inserircaixaE'((h,(a,b)):t) (Jogador (x,y) dir caixa) == True = ordenaC ((Caixa ,(x+1,y-1)):((h,(a,b)):t))
     |otherwise = inserircaixaE ((h,(a,b)):t) (Jogador (x,y+1) dir caixa)
 
 inserircaixaE' :: [(Peca,Coordenadas)] -> Jogador -> Bool
 inserircaixaE' [] (Jogador (x,y) dir caixa) = False
 inserircaixaE' ((h,(a,b)):t) (Jogador (x,y) dir caixa)  
-    |a==(x+1) && b==(y+1) = True
+    |a==(x+1) && b==(y) = True
     |otherwise = inserircaixaE' t (Jogador (x,y) dir caixa)
 
 
