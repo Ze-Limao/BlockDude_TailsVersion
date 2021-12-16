@@ -129,15 +129,15 @@ dropWest' ((h,(a,b)):t) (Jogador (x,y) dir caixa) = (Jogo (constroiMapa (inserir
 inserircaixaW :: [(Peca,Coordenadas)] -> Jogador -> [(Peca,Coordenadas)]
 inserircaixaW ((h,(a,b)):t) (Jogador (x,y) dir caixa)
     |y == ((altura ((h,(a,b)):t))+1) = ((h,(a,b)):t)
-    |inserircaixaW' ((h,(a,b)):t) (Jogador (x,y) dir caixa) == True = ordenaC ((Caixa ,(x-1,y)):((h,(a,b)):t))
-    |otherwise = inserircaixaW ((h,(a,b)):t) (Jogador (x,y+1) dir caixa)
+    |inserircaixaW' ((h,(a,b)):t) (Jogador (x,y) dir caixa) == True = ordenaC ((Caixa ,(x-1,y-1)):((h,(a,b)):t))
+    |otherwise = inserircaixaW ((h,(a,b)):t)  (Jogador (x,y+1) dir caixa)
 
+--caixa a frente
 inserircaixaW' :: [(Peca,Coordenadas)] -> Jogador -> Bool
 inserircaixaW' [] (Jogador (x,y) dir caixa) = False
 inserircaixaW' ((h,(a,b)):t) (Jogador (x,y) dir caixa)  
-    |a==(x-1) && b==(y+1) = True
+    |a==(x-1) && b==(y) = True
     |otherwise = inserircaixaW' t (Jogador (x,y) dir caixa)
-
 
 dropEast :: [(Peca,Coordenadas)] -> Jogador -> Jogo
 dropEast ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
