@@ -62,7 +62,7 @@ cair' l (Jogador (x,y) dir caixa)
 cair'' :: [(Peca,Coordenadas)] -> Jogador -> Jogador
 cair'' [] (Jogador (x,y) dir caixa) = (Jogador (x,y+1) dir caixa)
 cair'' ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
-    |a==x && b == (y+1) = (Jogador (x,y) dir caixa)
+    |(h==Caixa || h==Bloco) && (a==x && b == (y+1)) = (Jogador (x,y) dir caixa)
     |otherwise = cair'' t (Jogador (x,y) dir caixa)
 
 -- |Função que calcula o Movimento Trepar caso o obstaculo esteja a esquerda ou à direita do Jogador.
@@ -82,7 +82,7 @@ trepaEsq ((h,(a,b)):t) (Jogador (x,y) dir caixa)
 trepaEsq' :: [(Peca,Coordenadas)] -> Jogador -> Jogador
 trepaEsq' [] (Jogador (x,y) dir caixa) = (Jogador (x-1,y-1) dir caixa)
 trepaEsq' ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
-    |a==(x-1) && b==(y-1) = (Jogador (x,y) dir caixa)
+    |(h==Caixa || h==Bloco) && ((a==(x-1) && b==(y-1)))= (Jogador (x,y) dir caixa)
     |otherwise = trepaEsq' t (Jogador (x,y) dir caixa) 
 
 -- |Função que calcula o Movimento Trepar à direita do Jogador.
@@ -95,7 +95,7 @@ trepaDir ((h,(a,b)):t) (Jogador (x,y) dir caixa)
 trepaDir' :: [(Peca,Coordenadas)] -> Jogador -> Jogador
 trepaDir' [] (Jogador (x,y) dir caixa) = (Jogador (x+1,y-1) dir caixa)
 trepaDir' ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
-    |a==(x+1) && b==(y-1) = (Jogador (x,y) dir caixa)
+    |(h==Caixa || h==Bloco) && (a==(x+1) && b==(y-1)) = (Jogador (x,y) dir caixa)
     |otherwise = trepaDir' t (Jogador (x,y) dir caixa)     
 
 
