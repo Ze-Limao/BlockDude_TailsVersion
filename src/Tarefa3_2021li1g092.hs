@@ -11,7 +11,6 @@ module Tarefa3_2021li1g092 where
 import LI12122
 import Funcoesuteis 
 
-
 instance Show Jogo where
   show (Jogo m j) = jogo m j
   
@@ -25,7 +24,7 @@ jogo mapa (Jogador (x,y) dir caixa)
 -- |Função que insere o Jogador na string.
 jogo' :: String -> Jogador -> String 
 jogo' str (Jogador (x,y) dir False) = insertAt str (direcaodude (Jogador (x,y) dir False)) (posicaodude str (Jogador (x,y) dir False))
-jogo' str (Jogador (x,y) dir True) = insertAt (jogo' str (Jogador (x,y) dir False)) 'C' (posicaodude str (Jogador (x,y-1) dir True))
+jogo' str (Jogador (x,y) dir True) = insertAt (jogo' str (Jogador (x,y) dir False)) 'C' (posicaodude str (Jogador (x,y-1) dir False))
 
 -- |Função que nos diz onde o Jogador vai ser inserido na string.
 posicaodude :: String -> Jogador -> Int
