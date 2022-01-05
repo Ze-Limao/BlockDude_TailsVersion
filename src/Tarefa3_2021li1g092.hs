@@ -9,12 +9,24 @@ Módulo para a realização da Tarefa 3 do projeto de LI1 em 2021/22.
 module Tarefa3_2021li1g092 where
 
 import LI12122
+import Tarefa2_2021li1g092
 import Funcoesuteis 
 
 instance Show Jogo where
   show (Jogo m j) = jogo m j
   
--- |__Função principal que escreve um Jogo numa String.__ 
+{- |__Função principal que escreve um Jogo numa String.__ 
+
+===Exemplo:
+
+>>>(Jogo [[Vazio,Vazio,Vazio,Vazio,Vazio,Vazio,Vazio],[Vazio,Vazio,Vazio,Vazio,Vazio,Vazio,Bloco],[Vazio,Vazio,Vazio,Vazio,Vazio,Vazio,Bloco],[Porta,Vazio,Vazio,Vazio,Caixa,Vazio,Bloco],[Bloco,Bloco,Bloco,Bloco,Bloco,Bloco,Bloco]] (Jogador (5,3) Oeste False))
+       
+      X
+      X
+P   C<X
+XXXXXXX
+
+-}
 jogo :: Mapa -> Jogador -> String
 jogo [[]] (Jogador (x,y) dir caixa) = "" 
 jogo mapa (Jogador (x,y) dir caixa)
@@ -51,8 +63,8 @@ direcaodude (Jogador (x,y) dir caixa)
 -- |Função que verifica que o jogador com ou sem caixa consiga estar numa dada posição.
 espacojogador :: Mapa -> Jogador -> Bool
 espacojogador mapa (Jogador (x,y) dir caixa) 
-  |caixa == True = espacojogador' (decontroiMapa mapa) (Jogador (x,y-1) dir caixa) == 1 && espacojogador' (decontroiMapa mapa) (Jogador (x,y) dir caixa) == 1
-  |otherwise = espacojogador' (decontroiMapa mapa) (Jogador (x,y) dir caixa) == 1
+  |caixa == True = espacojogador' (desconstroiMapa mapa) (Jogador (x,y-1) dir caixa) == 1 && espacojogador' (desconstroiMapa mapa) (Jogador (x,y) dir caixa) == 1
+  |otherwise = espacojogador' (desconstroiMapa mapa) (Jogador (x,y) dir caixa) == 1
 
 -- |Dá 1 quando o Jogador tem espaço. 
 espacojogador' :: [(Peca,Coordenadas)] -> Jogador -> Int

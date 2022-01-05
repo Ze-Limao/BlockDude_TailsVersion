@@ -25,7 +25,7 @@ data OptionsP = Nivel1 | Nivel2 | Nivel3 | Finale
 
 type Estado = (Menu,Jogo,(Picture,Picture,Picture,Picture,Picture,Picture,Picture,Picture,Picture,Picture,Picture,Picture,Picture)) 
 
---------------------------------------------------------    AUX   -------------------------------------------------------------------
+----------------------------------------------------------------    AUX   ---------------------------------------------------------------------------------------------------------------------------------------
 
 audio1 :: IO (ProcessHandle) 
 audio1 = spawnCommand "mpv MenuTheme.mp3"
@@ -59,8 +59,8 @@ porta2 ((Jogo mapa (Jogador (x,y) dir caixa))) = if x==1 && y==9 then True else 
 porta3 :: Jogo ->  Bool
 porta3 ((Jogo mapa (Jogador (x,y) dir caixa))) = if x==1 && y==5 then True else False
 
------------------------------------------------------   FUNÇÃO MAIN   ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+--------------------------------------------------------------   FUNÇÃO MAIN   ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 estadoGlossInicial :: Menu -> Jogo -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Estado
 estadoGlossInicial m j p0 p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12 = (m,j,(p0,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12))
@@ -162,8 +162,7 @@ ajustar :: [(Peca,Coordenadas)] -> Picture -> Picture
 ajustar l pic = Translate (int2Float(-1* ( div (comprimento l * 60) 2))) (int2Float( div (altura l * 60) 2)) pic
 
 
------------------------------------------------------   PLAY   --------------------------------------------------------------------------------------------------------------------------------
-
+----------------------------------------------------------------   PLAY   --------------------------------------------------------------------------------------------------------------------------------
 
 main :: IO () 
 main = do 

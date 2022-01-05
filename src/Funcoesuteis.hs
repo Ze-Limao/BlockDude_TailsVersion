@@ -114,32 +114,6 @@ mylength (x:xs) = 1 + mylength xs
 
 {- |
 @
-decontroiMapa :: Mapa -> [(Peca, Coordenadas)]
-decontroiMapa mapa = decontroiMapa' (0,0) mapa 
-@
--}
-decontroiMapa :: Mapa -> [(Peca, Coordenadas)]
-decontroiMapa mapa = decontroiMapa' (0,0) mapa  
-
-{- |
-@
-decontroiMapa' :: Coordenadas -> Mapa -> [(Peca, Coordenadas)]
-decontroiMapa' (x,y) [[]]  = []
-decontroiMapa' (x,y) ([]:xs)  = decontroiMapa' (0,y+1) xs 
-decontroiMapa' (x,y) ((h:t) : xs)   
-    |h == Vazio = decontroiMapa' (x+1,y) (t:xs) 
-    |otherwise = (h,(x,y)) : decontroiMapa' (x+1,y) (t:xs)
-@
--}
-decontroiMapa' :: Coordenadas -> Mapa -> [(Peca, Coordenadas)]
-decontroiMapa' (x,y) [[]]  = []
-decontroiMapa' (x,y) ([]:xs)  = decontroiMapa' (0,y+1) xs 
-decontroiMapa' (x,y) ((h:t) : xs)   
-    |h == Vazio = decontroiMapa' (x+1,y) (t:xs) 
-    |otherwise = (h,(x,y)) : decontroiMapa' (x+1,y) (t:xs)
-
-{- |
-@
 insertAt :: [a] -> a -> Int -> [a]
 insertAt [] elem pos = [elem]
 insertAt (x:xs) elem pos
@@ -153,15 +127,12 @@ insertAt [] elem pos = [elem]
 insertAt (x:xs) elem pos
     | pos == 0 = elem : xs
     | pos > 0 = x : insertAt xs elem (pos - 1) 
-    | otherwise = x : insertAt xs elem ((pos) + length (x:xs) )
+    | otherwise = x : insertAt xs elem ((pos) + length (x:xs)) 
 
--- |yup escreve algo um certo numero de vezes
+-- |ordena listas de pecas da mesma linha.
 
-yup :: Int -> a -> [a]
-yup 0 a = []
-yup n a = a : yup (n-1) a 
-
--- |ordena listas de pecas da mesma linha
+{- |
+@
 ordenaC :: [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
 ordenaC [] = []
 ordenaC ((h1,(a1,b1)):t) = ordenaC' (h1,(a1,b1)) (ordenaC t) 
@@ -171,5 +142,13 @@ ordenaC' (h1,(a1,b1)) [] = [(h1,(a1,b1))]
 ordenaC' (h1,(a1,b1)) ((h2,(a2,b2)):t)
   |a1 > a2 = (h2,(a2,b2)) : ordenaC' (h1,(a1,b1)) t
   |otherwise = (h1,(a1,b1)) : (h2,(a2,b2)) : t
+-}
+ordenaC :: [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
+ordenaC [] = []
+ordenaC ((h1,(a1,b1)):t) = ordenaC' (h1,(a1,b1)) (ordenaC t) 
 
---Tarefa 5:
+ordenaC' :: (Peca,Coordenadas) -> [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
+ordenaC' (h1,(a1,b1)) [] = [(h1,(a1,b1))]
+ordenaC' (h1,(a1,b1)) ((h2,(a2,b2)):t)
+  |a1 > a2 = (h2,(a2,b2)) : ordenaC' (h1,(a1,b1)) t
+  |otherwise = (h1,(a1,b1)) : (h2,(a2,b2)) : t

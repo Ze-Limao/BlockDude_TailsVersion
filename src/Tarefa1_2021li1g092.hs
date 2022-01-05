@@ -11,8 +11,14 @@ module Tarefa1_2021li1g092 where
 import LI12122 
 import Funcoesuteis
 
-{- | __Função principal que vai verificar se uma lista de peças e respetivas coordenadas podem construir um mapa válido.  
+{- | __Função principal que vai verificar se uma lista de peças e respetivas coordenadas podem construir um mapa válido.__  
 
+===Exemplo:
+
+>>> validaPotencialMapa [(Porta,(0,3)),(Bloco,(0,4)),(Bloco,(1,4)),(Bloco,(2,4)),(Bloco,(3,4)),(Bloco,(4,4)),(Caixa,(4,3)),(Bloco,(5,4)),(Bloco,(6,4)),(Bloco,(6,3)),(Bloco,(6,2)),(Bloco,(6,1))]
+True
+>>> validaPotencialMapa []
+False
 -}
 validaPotencialMapa :: [(Peca, Coordenadas)] -> Bool
 validaPotencialMapa [] = False 
@@ -88,7 +94,7 @@ ultpeca ((p,(x,y)):t)
 chao :: [(Peca,Coordenadas)] -> Bool --funciona apenas para o chao seguido
 chao m = mylength (lineofblocks (ultimobloco m)  m) == (comprimento m + 1)
 
--- |Função auxiliar principal de chao.
+-- |Função auxiliar principal de chao que cria uma lista com os blocos que possuem a mesma altura que o ultimo bloco da coluna 0.
 lineofblocks :: (Peca,Coordenadas) -> [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
 lineofblocks (p,(x,y)) [] = []
 lineofblocks (p,(x,y)) ((p1,(x1,y1)):t)
