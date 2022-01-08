@@ -53,10 +53,11 @@ moveJogador (Jogo mapa (Jogador (x,y) dir caixa)) move
 caminhobloqueadoD :: Jogo -> Bool
 caminhobloqueadoD (Jogo mapa (Jogador (x,y) dir caixa)) = camBloqD (desconstroiMapa mapa) (Jogador (x,y) dir caixa)
 
--- |Função auxiliar que recebe a lista com as peças e verifica se existe alguma peça à direita do jogador.
+-- |Função auxiliar que recebe a lista com as peças e verifica se existe alguma peça à direita do jogador ou um vazio.
 camBloqD :: [(Peca,Coordenadas)] -> Jogador -> Bool
 camBloqD [] (Jogador (x,y) dir caixa) = False
 camBloqD ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
+    |comprimento ((h,(a,b)):t) == x = True
     |(a == x+1 && b == y) && (h==Caixa || h==Bloco) = True
     |otherwise = camBloqD t (Jogador (x,y) dir caixa) 
 
@@ -64,10 +65,11 @@ camBloqD ((h,(a,b)):t) (Jogador (x,y) dir caixa)
 caminhobloqueadoE :: Jogo -> Bool
 caminhobloqueadoE (Jogo mapa (Jogador (x,y) dir caixa)) = camBloqE (desconstroiMapa mapa) (Jogador (x,y) dir caixa)
 
--- |Função auxiliar que recebe a lista com as peças e verifica se existe alguma peça à esquerda do jogador.
+-- |Função auxiliar que recebe a lista com as peças e verifica se existe alguma peça à esquerda do jogador ou um vazio.
 camBloqE :: [(Peca,Coordenadas)] -> Jogador -> Bool
 camBloqE [] (Jogador (x,y) dir caixa) = False
 camBloqE ((h,(a,b)):t) (Jogador (x,y) dir caixa) 
+    |x==0 = True
     |(a == x-1 && b == y) && (h==Caixa || h==Bloco) = True
     |otherwise = camBloqE t (Jogador (x,y) dir caixa) 
 

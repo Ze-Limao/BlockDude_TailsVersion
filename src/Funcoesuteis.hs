@@ -142,6 +142,7 @@ ordenaC' (h1,(a1,b1)) [] = [(h1,(a1,b1))]
 ordenaC' (h1,(a1,b1)) ((h2,(a2,b2)):t)
   |a1 > a2 = (h2,(a2,b2)) : ordenaC' (h1,(a1,b1)) t
   |otherwise = (h1,(a1,b1)) : (h2,(a2,b2)) : t
+@
 -}
 ordenaC :: [(Peca,Coordenadas)] -> [(Peca,Coordenadas)]
 ordenaC [] = []

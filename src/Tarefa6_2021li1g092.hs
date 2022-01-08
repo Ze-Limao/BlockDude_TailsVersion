@@ -15,14 +15,15 @@ import Data.Maybe
 data Tree a = Node a [Tree a]
 
 
-{- __Função Principal que recebe um número de movimentos e um Jogo e devolverá se possivel uma lista com esse número de movimentos que resolvem um jogo.__ 
+{- | __Função Principal que recebe um número de movimentos e um Jogo e devolverá se possivel uma lista com esse número de movimentos que resolvem um jogo.__ 
 
 ===Exemplo:
 
->>>resolveJogo 5 m1e1
-Just [Trepar,AndarEsquerda,AndarEsquerda,AndarEsquerda,AndarEsquerda]
->>>resolveJogo 0 m1e1
+>>> resolveJogo 6 m1e1
+Just [AndarEsquerda,Trepar,AndarEsquerda,AndarEsquerda,AndarEsquerda,AndarEsquerda]
+>>> resolveJogo 0 m1e1
 Nothing
+
 -}
 resolveJogo :: Int -> Jogo -> Maybe [Movimento]
 resolveJogo i jogo = resolveJogo' i (Node jogo [])

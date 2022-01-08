@@ -40,11 +40,13 @@ insertAt (x:xs) elem pos
     | pos == 0 = elem : xs
     | pos &gt; 0 = x : insertAt xs elem (pos - 1) 
     | otherwise = x : insertAt xs elem ((pos) + length (x:xs) ) 
-</pre></div></div><div class="top"><p class="src"><a id="v:ordenaC" class="def">ordenaC</a> :: [(<a href="LI12122.html#t:Peca" title="LI12122">Peca</a>, <a href="LI12122.html#t:Coordenadas" title="LI12122">Coordenadas</a>)] -&gt; [(<a href="LI12122.html#t:Peca" title="LI12122">Peca</a>, <a href="LI12122.html#t:Coordenadas" title="LI12122">Coordenadas</a>)] <a href="#v:ordenaC" class="selflink">#</a></p><div class="doc"><p>ordena listas de pecas da mesma linha.</p><p>@
-ordenaC :: [(Peca,Coordenadas)] -&gt; [(Peca,Coordenadas)]
+</pre></div></div><div class="top"><p class="src"><a id="v:ordenaC" class="def">ordenaC</a> :: [(<a href="LI12122.html#t:Peca" title="LI12122">Peca</a>, <a href="LI12122.html#t:Coordenadas" title="LI12122">Coordenadas</a>)] -&gt; [(<a href="LI12122.html#t:Peca" title="LI12122">Peca</a>, <a href="LI12122.html#t:Coordenadas" title="LI12122">Coordenadas</a>)] <a href="#v:ordenaC" class="selflink">#</a></p><div class="doc"><p>ordena listas de pecas da mesma linha.</p><pre>ordenaC :: [(Peca,Coordenadas)] -&gt; [(Peca,Coordenadas)]
 ordenaC [] = []
-ordenaC ((h1,(a1,b1)):t) = ordenaC' (h1,(a1,b1)) (ordenaC t) </p><p>ordenaC' :: (Peca,Coordenadas) -&gt; [(Peca,Coordenadas)] -&gt; [(Peca,Coordenadas)]
+ordenaC ((h1,(a1,b1)):t) = ordenaC' (h1,(a1,b1)) (ordenaC t) 
+
+ordenaC' :: (Peca,Coordenadas) -&gt; [(Peca,Coordenadas)] -&gt; [(Peca,Coordenadas)]
 ordenaC' (h1,(a1,b1)) [] = [(h1,(a1,b1))]
 ordenaC' (h1,(a1,b1)) ((h2,(a2,b2)):t)
   |a1 &gt; a2 = (h2,(a2,b2)) : ordenaC' (h1,(a1,b1)) t
-  |otherwise = (h1,(a1,b1)) : (h2,(a2,b2)) : t</p></div></div><div class="top"><p class="src"><a id="v:ordenaC-39-" class="def">ordenaC'</a> :: (<a href="LI12122.html#t:Peca" title="LI12122">Peca</a>, <a href="LI12122.html#t:Coordenadas" title="LI12122">Coordenadas</a>) -&gt; [(<a href="LI12122.html#t:Peca" title="LI12122">Peca</a>, <a href="LI12122.html#t:Coordenadas" title="LI12122">Coordenadas</a>)] -&gt; [(<a href="LI12122.html#t:Peca" title="LI12122">Peca</a>, <a href="LI12122.html#t:Coordenadas" title="LI12122">Coordenadas</a>)] <a href="#v:ordenaC-39-" class="selflink">#</a></p></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.22.0</p></div></body></html>
+  |otherwise = (h1,(a1,b1)) : (h2,(a2,b2)) : t
+</pre></div></div><div class="top"><p class="src"><a id="v:ordenaC-39-" class="def">ordenaC'</a> :: (<a href="LI12122.html#t:Peca" title="LI12122">Peca</a>, <a href="LI12122.html#t:Coordenadas" title="LI12122">Coordenadas</a>) -&gt; [(<a href="LI12122.html#t:Peca" title="LI12122">Peca</a>, <a href="LI12122.html#t:Coordenadas" title="LI12122">Coordenadas</a>)] -&gt; [(<a href="LI12122.html#t:Peca" title="LI12122">Peca</a>, <a href="LI12122.html#t:Coordenadas" title="LI12122">Coordenadas</a>)] <a href="#v:ordenaC-39-" class="selflink">#</a></p></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.22.0</p></div></body></html>
