@@ -9,6 +9,7 @@ library
         Tarefa2_2021li1g092
         Tarefa3_2021li1g092
         Tarefa4_2021li1g092
+        Funcoesuteis
     hs-source-dirs:
         src
     build-depends:

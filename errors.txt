@@ -1,0 +1,172 @@
+### Failure in: 0:1:Valida Mapa 02
+tests/Fase1.hs:34
+expected: False
+ but got: True
+### Failure in: 0:2:Valida Mapa 03
+tests/Fase1.hs:34
+expected: False
+ but got: True
+### Failure in: 0:3:Valida Mapa 04
+tests/Fase1.hs:34
+expected: False
+ but got: True
+### Failure in: 0:4:Valida Mapa 05
+tests/Fase1.hs:34
+expected: False
+ but got: True
+### Failure in: 0:10:Valida Mapa 11
+tests/Fase1.hs:34
+expected: False
+ but got: True
+### Error in:   1:0:Construir Mapa 01
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:1:Construir Mapa 02
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:2:Construir Mapa 03
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:3:Construir Mapa 04
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:4:Construir Mapa 05
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:5:Construir Mapa 06
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:6:Construir Mapa 07
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:7:Construir Mapa 08
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:8:Construir Mapa 09
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:9:Construir Mapa 10
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:10:Construir Mapa 11
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:11:Construir Mapa 12
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:12:Construir Mapa 13
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:13:Construir Mapa 14
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:28:Identidade Mapa 01
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:29:Identidade Mapa 02
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:30:Identidade Mapa 03
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:31:Identidade Mapa 04
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:32:Identidade Mapa 05
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:33:Identidade Mapa 06
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:34:Identidade Mapa 07
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_2021li1g092.hs:16:22 in 2021li1g092-0.1.0.0-GFtQ5mTk4Ka8BNkwoAxPg2:Tarefa2_2021li1g092
+CallStack (from HasCallStack):
+  error, called at tests/Fase1.hs:27:29 in main:Main
+### Error in:   1:35:Identidade Mapa 08
+Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:75:14 in base:GHC.Err
+  undefined, called at src/Tarefa2_20

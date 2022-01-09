@@ -1,0 +1,13 @@
+### Failure in: 0:1:Show Jogo 02
+tests/Fase1.hs:34
+expected: "       \n      X\n      X\nP X C<X\nXXXXXXX"
+ but got: "       \n      X\n     CX\nP X C<X\nXXXXXXX"
+### Failure in: 0:7:Show Jogo 07
+tests/Fase1.hs:34
+expected: "       \n      X\nP     X\n  X C<X\nXXXXXXX"
+ but got: "       \n      X\nP    CX\n  X C<X\nXXXXXXX"
+### Failure in: 0:8:Show Jogo 08
+tests/Fase1.hs:34
+expected: "       \n      X\n P    X\n  X C<X\nXXXXXXX"
+ but got: "       \n      X\n P   CX\n  X C<X\nXXXXXXX"
+Cases: 9  Tried: 9  Errors: 0  Failures: 3

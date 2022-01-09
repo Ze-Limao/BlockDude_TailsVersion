@@ -1,7 +1,12 @@
-
-import System.IO
 import Control.Monad
+import Control.Exception
+
+-- import Data.CallStack
 import Data.List (sort)
+import System.IO
+import System.IO.Unsafe (unsafePerformIO)
+import System.Timeout
+import qualified System.Exit as Exit
 
 import LI12122
 
@@ -10,9 +15,28 @@ import Tarefa2_2021li1g092
 import Tarefa3_2021li1g092
 import Tarefa4_2021li1g092
 
-import Test.HUnit
+import Test.HUnit hiding ((~=?))
+import qualified Test.HUnit as T ((~=?))
 
-import qualified System.Exit as Exit
+(~=?) expected actual =
+  unsafePerformIO
+    (do x <-
+          timeout timeoutVal $
+          catch
+            (return $! actual)
+            (\e -> return $ error $ displayException (e :: SomeException))
+        y <-
+          timeout timeoutVal $
+          catch
+            (return $! expected)
+            (\e -> return $ error $ displayException (e :: SomeException))
+        case (x, y) of
+          (Just e, Just a) -> return $ (T.~=?) e a
+          _ ->
+            return $ (T.~=?) ((error "timeout") :: ()) ((error "timeout") :: ()))
+  where
+    timeoutVal = 1000000 * nsec
+    nsec = 1 -- timeout for nsec seconds
 
 insertAt :: (Int, Int) -> a -> [[a]] -> [[a]]
 insertAt (x, y) item grelha = take y grelha ++ linha : drop (y + 1) grelha
@@ -21,208 +45,19 @@ insertAt (x, y) item grelha = take y grelha ++ linha : drop (y + 1) grelha
     linha = take x lista ++ item : drop (x + 1) lista
 
 invalido01 :: [(Peca, Coordenadas)]
-invalido01 =
-  [ (Bloco, (4, 5)),
-    (Bloco, (12, 5)),
-    (Porta, (1, 6)),
-    (Bloco, (4, 6)),
-    (Bloco, (8, 6)),
-    (Caixa, (10, 6)),
-    (Bloco, (12, 6)),
-    (Caixa, (15, 6)),
-    (Bloco, (0, 7)),
-    (Bloco, (1, 7)),
-    (Bloco, (2, 7)),
-    (Bloco, (3, 7)),
-    (Bloco, (4, 7)),
-    (Bloco, (5, 7)),
-    (Bloco, (6, 7)),
-    (Bloco, (7, 7)),
-    (Bloco, (8, 7)),
-    (Bloco, (9, 7)),
-    (Bloco, (10, 7)),
-    (Bloco, (11, 7)),
-    (Bloco, (12, 7)),
-    (Bloco, (13, 7)),
-    (Bloco, (14, 7)),
-    (Bloco, (16, 7)),
-    (Bloco, (17, 7)),
-    (Bloco, (18, 7)),
-    (Bloco, (19, 7))
-  ]
+invalido01 = [ (Bloco, (4, 5)), (Bloco, (12, 5)), (Porta, (1, 6)), (Bloco, (4, 6)), (Bloco, (8, 6)), (Caixa, (10, 6)), (Bloco, (12, 6)), (Caixa, (15, 6)), (Bloco, (0, 7)), (Bloco, (1, 7)), (Bloco, (2, 7)), (Bloco, (3, 7)), (Bloco, (4, 7)), (Bloco, (5, 7)), (Bloco, (6, 7)), (Bloco, (7, 7)), (Bloco, (8, 7)), (Bloco, (9, 7)), (Bloco, (10, 7)), (Bloco, (11, 7)), (Bloco, (12, 7)), (Bloco, (13, 7)), (Bloco, (14, 7)), (Bloco, (16, 7)), (Bloco, (17, 7)), (Bloco, (18, 7)), (Bloco, (19, 7)) ]
 
 invalido02 :: [(Peca, Coordenadas)]
-invalido02 =
-  [ (Bloco, (4, 5)),
-    (Bloco, (12, 5)),
-    (Porta, (1, 6)),
-    (Bloco, (4, 6)),
-    (Bloco, (8, 6)),
-    (Caixa, (10, 6)),
-    (Bloco, (12, 6)),
-    (Bloco, (0, 7)),
-    (Bloco, (1, 7)),
-    (Bloco, (2, 7)),
-    (Bloco, (3, 7)),
-    (Bloco, (4, 7)),
-    (Bloco, (5, 7)),
-    (Bloco, (6, 7)),
-    (Bloco, (7, 7)),
-    (Bloco, (8, 7)),
-    (Bloco, (9, 7)),
-    (Bloco, (10, 7)),
-    (Bloco, (11, 7)),
-    (Bloco, (12, 7)),
-    (Bloco, (13, 7)),
-    (Bloco, (16, 7)),
-    (Bloco, (17, 7)),
-    (Bloco, (18, 7)),
-    (Bloco, (19, 7))
-  ]
+invalido02 = [ (Bloco, (4, 5)), (Bloco, (12, 5)), (Porta, (1, 6)), (Bloco, (4, 6)), (Bloco, (8, 6)), (Caixa, (10, 6)), (Bloco, (12, 6)), (Bloco, (0, 7)), (Bloco, (1, 7)), (Bloco, (2, 7)), (Bloco, (3, 7)), (Bloco, (4, 7)), (Bloco, (5, 7)), (Bloco, (6, 7)), (Bloco, (7, 7)), (Bloco, (8, 7)), (Bloco, (9, 7)), (Bloco, (10, 7)), (Bloco, (11, 7)), (Bloco, (12, 7)), (Bloco, (13, 7)), (Bloco, (16, 7)), (Bloco, (17, 7)), (Bloco, (18, 7)), (Bloco, (19, 7)) ]
 
 invalido03 :: [(Peca, Coordenadas)]
-invalido03 =
-  [ (Bloco, (0, 0)),
-    (Bloco, (19, 0)),
-    (Bloco, (0, 1)),
-    (Bloco, (19, 1)),
-    (Bloco, (0, 2)),
-    (Bloco, (19, 2)),
-    (Bloco, (0, 3)),
-    (Bloco, (19, 3)),
-    (Bloco, (0, 4)),
-    (Bloco, (19, 4)),
-    (Bloco, (0, 5)),
-    (Bloco, (4, 5)),
-    (Caixa, (12, 4)),
-    (Bloco, (19, 5)),
-    (Bloco, (0, 6)),
-    (Porta, (1, 6)),
-    (Bloco, (4, 6)),
-    (Bloco, (8, 6)),
-    (Caixa, (10, 6)),
-    (Bloco, (12, 6)),
-    (Caixa, (15, 6)),
-    (Bloco, (19, 6)),
-    (Bloco, (0, 7)),
-    (Bloco, (1, 7)),
-    (Bloco, (2, 7)),
-    (Bloco, (3, 7)),
-    (Bloco, (4, 7)),
-    (Bloco, (5, 7)),
-    (Bloco, (6, 7)),
-    (Bloco, (7, 7)),
-    (Bloco, (8, 7)),
-    (Bloco, (9, 7)),
-    (Bloco, (10, 7)),
-    (Bloco, (11, 7)),
-    (Bloco, (12, 7)),
-    (Bloco, (13, 7)),
-    (Bloco, (14, 7)),
-    (Bloco, (15, 7)),
-    (Bloco, (16, 7)),
-    (Bloco, (17, 7)),
-    (Bloco, (18, 7)),
-    (Bloco, (19, 7))
-  ]
+invalido03 = [ (Bloco, (0, 0)), (Bloco, (19, 0)), (Bloco, (0, 1)), (Bloco, (19, 1)), (Bloco, (0, 2)), (Bloco, (19, 2)), (Bloco, (0, 3)), (Bloco, (19, 3)), (Bloco, (0, 4)), (Bloco, (19, 4)), (Bloco, (0, 5)), (Bloco, (4, 5)), (Caixa, (12, 4)), (Bloco, (19, 5)), (Bloco, (0, 6)), (Porta, (1, 6)), (Bloco, (4, 6)), (Bloco, (8, 6)), (Caixa, (10, 6)), (Bloco, (12, 6)), (Caixa, (15, 6)), (Bloco, (19, 6)), (Bloco, (0, 7)), (Bloco, (1, 7)), (Bloco, (2, 7)), (Bloco, (3, 7)), (Bloco, (4, 7)), (Bloco, (5, 7)), (Bloco, (6, 7)), (Bloco, (7, 7)), (Bloco, (8, 7)), (Bloco, (9, 7)), (Bloco, (10, 7)), (Bloco, (11, 7)), (Bloco, (12, 7)), (Bloco, (13, 7)), (Bloco, (14, 7)), (Bloco, (15, 7)), (Bloco, (16, 7)), (Bloco, (17, 7)), (Bloco, (18, 7)), (Bloco, (19, 7)) ]
 
 invalido04 :: [(Peca, Coordenadas)]
-invalido04 =
-  [ (Bloco, (19, 0)),
-    (Bloco, (18, 1)),
-    (Bloco, (20, 1)),
-    (Bloco, (17, 2)),
-    (Bloco, (21, 2)),
-    (Bloco, (7, 3)),
-    (Bloco, (16, 3)),
-    (Bloco, (22, 3)),
-    (Bloco, (6, 4)),
-    (Bloco, (8, 4)),
-    (Bloco, (15, 4)),
-    (Bloco, (23, 4)),
-    (Bloco, (3, 5)),
-    (Bloco, (4, 5)),
-    (Bloco, (5, 5)),
-    (Bloco, (9, 5)),
-    (Bloco, (14, 5)),
-    (Bloco, (24, 5)),
-    (Bloco, (2, 6)),
-    (Bloco, (10, 6)),
-    (Bloco, (13, 6)),
-    (Bloco, (24, 6)),
-    (Bloco, (1, 7)),
-    (Bloco, (11, 7)),
-    (Bloco, (12, 7)),
-    (Bloco, (24, 7)),
-    (Bloco, (1, 8)),
-    (Bloco, (24, 8)),
-    (Bloco, (1, 9)),
-    (Caixa, (23, 9)),
-    (Bloco, (24, 9)),
-    (Bloco, (1, 10)),
-    (Caixa, (22, 10)),
-    (Caixa, (23, 10)),
-    (Bloco, (24, 10)),
-    (Bloco, (1, 11)),
-    (Bloco, (22, 11)),
-    (Bloco, (23, 11)),
-    (Bloco, (24, 11)),
-    (Bloco, (0, 12)),
-    (Bloco, (1, 12)),
-    (Bloco, (6, 12)),
-    (Bloco, (17, 12)),
-    (Bloco, (0, 13)),
-    (Porta, (1, 13)),
-    (Bloco, (6, 13)),
-    (Caixa, (8, 13)),
-    (Bloco, (17, 13)),
-    (Bloco, (18, 13)),
-    (Bloco, (19, 13)),
-    (Bloco, (20, 13)),
-    (Bloco, (21, 13)),
-    (Bloco, (22, 13)),
-    (Bloco, (0, 14)),
-    (Bloco, (1, 14)),
-    (Bloco, (2, 14)),
-    (Bloco, (3, 14)),
-    (Bloco, (4, 14)),
-    (Bloco, (6, 14)),
-    (Caixa, (8, 14)),
-    (Caixa, (12, 14)),
-    (Bloco, (15, 14)),
-    (Bloco, (16, 14)),
-    (Bloco, (17, 14)),
-    (Bloco, (4, 15)),
-    (Bloco, (6, 15)),
-    (Caixa, (8, 15)),
-    (Bloco, (10, 15)),
-    (Bloco, (12, 15)),
-    (Caixa, (13, 15)),
-    (Bloco, (15, 15)),
-    (Bloco, (4, 16)),
-    (Bloco, (6, 16)),
-    (Bloco, (7, 16)),
-    (Bloco, (8, 16)),
-    (Bloco, (9, 16)),
-    (Bloco, (10, 16)),
-    (Bloco, (11, 16)),
-    (Bloco, (12, 16)),
-    (Bloco, (13, 16)),
-    (Bloco, (14, 16)),
-    (Bloco, (15, 16)),
-    (Bloco, (4, 17)),
-    (Bloco, (5, 17)),
-    (Bloco, (6, 17))
-  ]
+invalido04 = [ (Bloco, (19, 0)), (Bloco, (18, 1)), (Bloco, (20, 1)), (Bloco, (17, 2)), (Bloco, (21, 2)), (Bloco, (7, 3)), (Bloco, (16, 3)), (Bloco, (22, 3)), (Bloco, (6, 4)), (Bloco, (8, 4)), (Bloco, (15, 4)), (Bloco, (23, 4)), (Bloco, (3, 5)), (Bloco, (4, 5)), (Bloco, (5, 5)), (Bloco, (9, 5)), (Bloco, (14, 5)), (Bloco, (24, 5)), (Bloco, (2, 6)), (Bloco, (10, 6)), (Bloco, (13, 6)), (Bloco, (24, 6)), (Bloco, (1, 7)), (Bloco, (11, 7)), (Bloco, (12, 7)), (Bloco, (24, 7)), (Bloco, (1, 8)), (Bloco, (24, 8)), (Bloco, (1, 9)), (Caixa, (23, 9)), (Bloco, (24, 9)), (Bloco, (1, 10)), (Caixa, (22, 10)), (Caixa, (23, 10)), (Bloco, (24, 10)), (Bloco, (1, 11)), (Bloco, (22, 11)), (Bloco, (23, 11)), (Bloco, (24, 11)), (Bloco, (0, 12)), (Bloco, (1, 12)), (Bloco, (6, 12)), (Bloco, (17, 12)), (Bloco, (0, 13)), (Porta, (1, 13)), (Bloco, (6, 13)), (Caixa, (8, 13)), (Bloco, (17, 13)), (Bloco, (18, 13)), (Bloco, (19, 13)), (Bloco, (20, 13)), (Bloco, (21, 13)), (Bloco, (22, 13)), (Bloco, (0, 14)), (Bloco, (1, 14)), (Bloco, (2, 14)), (Bloco, (3, 14)), (Bloco, (4, 14)), (Bloco, (6, 14)), (Caixa, (8, 14)), (Caixa, (12, 14)), (Bloco, (15, 14)), (Bloco, (16, 14)), (Bloco, (17, 14)), (Bloco, (4, 15)), (Bloco, (6, 15)), (Caixa, (8, 15)), (Bloco, (10, 15)), (Bloco, (12, 15)), (Caixa, (13, 15)), (Bloco, (15, 15)), (Bloco, (4, 16)), (Bloco, (6, 16)), (Bloco, (7, 16)), (Bloco, (8, 16)), (Bloco, (9, 16)), (Bloco, (10, 16)), (Bloco, (11, 16)), (Bloco, (12, 16)), (Bloco, (13, 16)), (Bloco, (14, 16)), (Bloco, (15, 16)), (Bloco, (4, 17)), (Bloco, (5, 17)), (Bloco, (6, 17)) ]
 
 invalido05 :: [(Peca, Coordenadas)]
-invalido05 =
-  [ (Porta, (0, 0)) , (Bloco, (0, 1)) , (Bloco, (1, 1)) , (Porta, (4, 0))
-  , (Bloco, (2, 1))
-  , (Bloco, (3, 1))
-  , (Bloco, (4, 1))
-  , (Bloco, (5, 1))
-  ]
+invalido05 = [ (Porta, (0, 0)) , (Bloco, (0, 1)) , (Bloco, (1, 1)) , (Porta, (4, 0)) , (Bloco, (2, 1)) , (Bloco, (3, 1)) , (Bloco, (4, 1)) , (Bloco, (5, 1)) ]
 
 invalido06 :: [(Peca, Coordenadas)]
 invalido06 = [(Bloco, (0, 1)), (Bloco, (1, 1)), (Bloco, (2, 1)), (Bloco, (3, 1)), (Bloco, (4, 1)), (Bloco, (5, 1))]
@@ -234,21 +69,7 @@ invalido08 :: [(Peca, Coordenadas)]
 invalido08 = [(Bloco, (6, 1)), (Bloco, (2, 2)), (Bloco, (6, 2)), (Porta, (0, 3)), (Bloco, (2, 3)), (Bloco, (6, 3)), (Bloco, (6, 3)), (Bloco, (0, 4)), (Bloco, (1, 4)), (Bloco, (2, 4)), (Bloco, (3, 4)), (Bloco, (4, 4)), (Bloco, (5, 4)), (Bloco, (6, 4))]
 
 lista01 :: [(Peca, Coordenadas)]
-lista01 =
-  [ (Porta, (0, 3)),
-    (Bloco, (0, 4)),
-    (Bloco, (1, 4)),
-    (Bloco, (2, 4)),
-    (Bloco, (2, 3)),
-    (Bloco, (3, 4)),
-    (Bloco, (4, 4)),
-    (Caixa, (4, 3)),
-    (Bloco, (5, 4)),
-    (Bloco, (6, 4)),
-    (Bloco, (6, 3)),
-    (Bloco, (6, 2)),
-    (Bloco, (6, 1))
-  ]
+lista01 = [(Porta, (0, 3)), (Bloco, (0, 4)), (Bloco, (1, 4)), (Bloco, (2, 4)), (Bloco, (2, 3)), (Bloco, (3, 4)), (Bloco, (4, 4)), (Caixa, (4, 3)), (Bloco, (5, 4)), (Bloco, (6, 4)), (Bloco, (6, 3)), (Bloco, (6, 2)), (Bloco, (6, 1)) ]
 
 mapa01 :: Mapa
 mapa01 =
@@ -260,15 +81,7 @@ mapa01 =
   ]
 
 lista02 :: [(Peca, Coordenadas)]
-lista02 =
-  [ (Porta, (0, 0)),
-    (Bloco, (0, 1)),
-    (Bloco, (1, 1)),
-    (Bloco, (2, 1)),
-    (Bloco, (3, 1)),
-    (Bloco, (4, 1)),
-    (Bloco, (5, 1))
-  ]
+lista02 = [ (Porta, (0, 0)), (Bloco, (0, 1)), (Bloco, (1, 1)), (Bloco, (2, 1)), (Bloco, (3, 1)), (Bloco, (4, 1)), (Bloco, (5, 1)) ]
 
 mapa02 :: Mapa
 mapa02 =
@@ -277,16 +90,7 @@ mapa02 =
   ]
 
 lista03 :: [(Peca, Coordenadas)]
-lista03 =
-  [ (Porta, (0, 1)),
-    (Bloco, (2, 1)),
-    (Bloco, (0, 2)),
-    (Bloco, (1, 2)),
-    (Bloco, (2, 2)),
-    (Bloco, (3, 2)),
-    (Bloco, (4, 2)),
-    (Bloco, (5, 2))
-  ]
+lista03 = [ (Porta, (0, 1)), (Bloco, (2, 1)), (Bloco, (0, 2)), (Bloco, (1, 2)), (Bloco, (2, 2)), (Bloco, (3, 2)), (Bloco, (4, 2)), (Bloco, (5, 2)) ]
 
 mapa03 :: Mapa
 mapa03 =
@@ -296,21 +100,7 @@ mapa03 =
   ]
 
 lista04 :: [(Peca, Coordenadas)]
-lista04 =
-  [ (Bloco, (6, 1)),
-    (Bloco, (2, 2)),
-    (Bloco, (6, 2)),
-    (Porta, (0, 3)),
-    (Bloco, (2, 3)),
-    (Bloco, (6, 3)),
-    (Bloco, (0, 4)),
-    (Bloco, (1, 4)),
-    (Bloco, (2, 4)),
-    (Bloco, (3, 4)),
-    (Bloco, (4, 4)),
-    (Bloco, (5, 4)),
-    (Bloco, (6, 4))
-  ]
+lista04 = [ (Bloco, (6, 1)), (Bloco, (2, 2)), (Bloco, (6, 2)), (Porta, (0, 3)), (Bloco, (2, 3)), (Bloco, (6, 3)), (Bloco, (0, 4)), (Bloco, (1, 4)), (Bloco, (2, 4)), (Bloco, (3, 4)), (Bloco, (4, 4)), (Bloco, (5, 4)), (Bloco, (6, 4)) ]
 
 mapa04 :: Mapa
 mapa04 =
@@ -322,21 +112,7 @@ mapa04 =
   ]
 
 lista05 :: [(Peca, Coordenadas)]
-lista05 =
-  [ (Bloco, (2, 1)),
-    (Bloco, (6, 1)),
-    (Bloco, (6, 2)),
-    (Porta, (0, 3)),
-    (Bloco, (2, 3)),
-    (Bloco, (6, 3)),
-    (Bloco, (0, 4)),
-    (Bloco, (1, 4)),
-    (Bloco, (2, 4)),
-    (Bloco, (3, 4)),
-    (Bloco, (4, 4)),
-    (Bloco, (5, 4)),
-    (Bloco, (6, 4))
-  ]
+lista05 = [ (Bloco, (2, 1)), (Bloco, (6, 1)), (Bloco, (6, 2)), (Porta, (0, 3)), (Bloco, (2, 3)), (Bloco, (6, 3)), (Bloco, (0, 4)), (Bloco, (1, 4)), (Bloco, (2, 4)), (Bloco, (3, 4)), (Bloco, (4, 4)), (Bloco, (5, 4)), (Bloco, (6, 4)) ]
 
 mapa05 :: Mapa
 mapa05 =
@@ -348,22 +124,7 @@ mapa05 =
   ]
 
 lista06 :: [(Peca, Coordenadas)]
-lista06 =
-  [ (Bloco, (6, 1)),
-    (Bloco, (2, 2)),
-    (Bloco, (6, 2)),
-    (Porta, (0, 3)),
-    (Bloco, (2, 3)),
-    (Caixa, (3, 3)),
-    (Bloco, (6, 3)),
-    (Bloco, (0, 4)),
-    (Bloco, (1, 4)),
-    (Bloco, (2, 4)),
-    (Bloco, (3, 4)),
-    (Bloco, (4, 4)),
-    (Bloco, (5, 4)),
-    (Bloco, (6, 4))
-  ]
+lista06 = [ (Bloco, (6, 1)), (Bloco, (2, 2)), (Bloco, (6, 2)), (Porta, (0, 3)), (Bloco, (2, 3)), (Caixa, (3, 3)), (Bloco, (6, 3)), (Bloco, (0, 4)), (Bloco, (1, 4)), (Bloco, (2, 4)), (Bloco, (3, 4)), (Bloco, (4, 4)), (Bloco, (5, 4)), (Bloco, (6, 4)) ]
 
 mapa06 :: Mapa
 mapa06 =
@@ -375,17 +136,7 @@ mapa06 =
   ]
 
 lista07 :: [(Peca, Coordenadas)]
-lista07 =
-  [ (Bloco, (3, 0)),
-    (Porta, (0, 1)),
-    (Caixa, (2, 1)),
-    (Bloco, (0, 2)),
-    (Bloco, (1, 2)),
-    (Bloco, (2, 2)),
-    (Bloco, (3, 2)),
-    (Bloco, (4, 2)),
-    (Bloco, (5, 2))
-  ]
+lista07 = [ (Bloco, (3, 0)), (Porta, (0, 1)), (Caixa, (2, 1)), (Bloco, (0, 2)), (Bloco, (1, 2)), (Bloco, (2, 2)), (Bloco, (3, 2)), (Bloco, (4, 2)), (Bloco, (5, 2)) ]
 
 mapa07 :: Mapa
 mapa07 =
@@ -395,17 +146,7 @@ mapa07 =
   ]
 
 lista08 :: [(Peca, Coordenadas)]
-lista08 =
-  [ (Bloco, (2, 0)),
-    (Porta, (0, 1)),
-    (Caixa, (2, 1)),
-    (Bloco, (0, 2)),
-    (Bloco, (1, 2)),
-    (Bloco, (2, 2)),
-    (Bloco, (3, 2)),
-    (Bloco, (4, 2)),
-    (Bloco, (5, 2))
-  ]
+lista08 = [ (Bloco, (2, 0)), (Porta, (0, 1)), (Caixa, (2, 1)), (Bloco, (0, 2)), (Bloco, (1, 2)), (Bloco, (2, 2)), (Bloco, (3, 2)), (Bloco, (4, 2)), (Bloco, (5, 2)) ]
 
 mapa08 :: Mapa
 mapa08 =
@@ -415,50 +156,7 @@ mapa08 =
   ]
 
 lista09 :: [(Peca, Coordenadas)]
-lista09 =
-  [ (Bloco, (0, 0)),
-    (Bloco, (19, 0)),
-    (Bloco, (0, 1)),
-    (Bloco, (19, 1)),
-    (Bloco, (0, 2)),
-    (Bloco, (19, 2)),
-    (Bloco, (0, 3)),
-    (Bloco, (19, 3)),
-    (Bloco, (0, 4)),
-    (Bloco, (19, 4)),
-    (Bloco, (0, 5)),
-    (Bloco, (4, 5)),
-    (Bloco, (12, 5)),
-    (Bloco, (19, 5)),
-    (Bloco, (0, 6)),
-    (Porta, (1, 6)),
-    (Bloco, (4, 6)),
-    (Bloco, (8, 6)),
-    (Caixa, (10, 6)),
-    (Bloco, (12, 6)),
-    (Caixa, (15, 6)),
-    (Bloco, (19, 6)),
-    (Bloco, (0, 7)),
-    (Bloco, (1, 7)),
-    (Bloco, (2, 7)),
-    (Bloco, (3, 7)),
-    (Bloco, (4, 7)),
-    (Bloco, (5, 7)),
-    (Bloco, (6, 7)),
-    (Bloco, (7, 7)),
-    (Bloco, (8, 7)),
-    (Bloco, (9, 7)),
-    (Bloco, (10, 7)),
-    (Bloco, (11, 7)),
-    (Bloco, (12, 7)),
-    (Bloco, (13, 7)),
-    (Bloco, (14, 7)),
-    (Bloco, (15, 7)),
-    (Bloco, (16, 7)),
-    (Bloco, (17, 7)),
-    (Bloco, (18, 7)),
-    (Bloco, (19, 7))
-  ]
+lista09 = [ (Bloco, (0, 0)), (Bloco, (19, 0)), (Bloco, (0, 1)), (Bloco, (19, 1)), (Bloco, (0, 2)), (Bloco, (19, 2)), (Bloco, (0, 3)), (Bloco, (19, 3)), (Bloco, (0, 4)), (Bloco, (19, 4)), (Bloco, (0, 5)), (Bloco, (4, 5)), (Bloco, (12, 5)), (Bloco, (19, 5)), (Bloco, (0, 6)), (Porta, (1, 6)), (Bloco, (4, 6)), (Bloco, (8, 6)), (Caixa, (10, 6)), (Bloco, (12, 6)), (Caixa, (15, 6)), (Bloco, (19, 6)), (Bloco, (0, 7)), (Bloco, (1, 7)), (Bloco, (2, 7)), (Bloco, (3, 7)), (Bloco, (4, 7)), (Bloco, (5, 7)), (Bloco, (6, 7)), (Bloco, (7, 7)), (Bloco, (8, 7)), (Bloco, (9, 7)), (Bloco, (10, 7)), (Bloco, (11, 7)), (Bloco, (12, 7)), (Bloco, (13, 7)), (Bloco, (14, 7)), (Bloco, (15, 7)), (Bloco, (16, 7)), (Bloco, (17, 7)), (Bloco, (18, 7)), (Bloco, (19, 7)) ]
 
 mapa09 :: Mapa
 mapa09 =
@@ -473,36 +171,7 @@ mapa09 =
   ]
 
 lista10 :: [(Peca, Coordenadas)]
-lista10 =
-  [ (Bloco, (4, 5)),
-    (Bloco, (12, 5)),
-    (Porta, (1, 6)),
-    (Bloco, (4, 6)),
-    (Bloco, (8, 6)),
-    (Caixa, (10, 6)),
-    (Bloco, (12, 6)),
-    (Caixa, (15, 6)),
-    (Bloco, (0, 7)),
-    (Bloco, (1, 7)),
-    (Bloco, (2, 7)),
-    (Bloco, (3, 7)),
-    (Bloco, (4, 7)),
-    (Bloco, (5, 7)),
-    (Bloco, (6, 7)),
-    (Bloco, (7, 7)),
-    (Bloco, (8, 7)),
-    (Bloco, (9, 7)),
-    (Bloco, (10, 7)),
-    (Bloco, (11, 7)),
-    (Bloco, (12, 7)),
-    (Bloco, (13, 7)),
-    (Bloco, (14, 7)),
-    (Bloco, (15, 7)),
-    (Bloco, (16, 7)),
-    (Bloco, (17, 7)),
-    (Bloco, (18, 7)),
-    (Bloco, (19, 7))
-  ]
+lista10 = [ (Bloco, (4, 5)), (Bloco, (12, 5)), (Porta, (1, 6)), (Bloco, (4, 6)), (Bloco, (8, 6)), (Caixa, (10, 6)), (Bloco, (12, 6)), (Caixa, (15, 6)), (Bloco, (0, 7)), (Bloco, (1, 7)), (Bloco, (2, 7)), (Bloco, (3, 7)), (Bloco, (4, 7)), (Bloco, (5, 7)), (Bloco, (6, 7)), (Bloco, (7, 7)), (Bloco, (8, 7)), (Bloco, (9, 7)), (Bloco, (10, 7)), (Bloco, (11, 7)), (Bloco, (12, 7)), (Bloco, (13, 7)), (Bloco, (14, 7)), (Bloco, (15, 7)), (Bloco, (16, 7)), (Bloco, (17, 7)), (Bloco, (18, 7)), (Bloco, (19, 7)) ]
 
 mapa10 :: Mapa
 mapa10 =
@@ -517,94 +186,7 @@ mapa10 =
   ]
 
 lista11 :: [(Peca, Coordenadas)]
-lista11 =
-  [ (Bloco, (19, 0)),
-    (Bloco, (18, 1)),
-    (Bloco, (20, 1)),
-    (Bloco, (17, 2)),
-    (Bloco, (21, 2)),
-    (Bloco, (7, 3)),
-    (Bloco, (16, 3)),
-    (Bloco, (22, 3)),
-    (Bloco, (6, 4)),
-    (Bloco, (8, 4)),
-    (Bloco, (15, 4)),
-    (Bloco, (23, 4)),
-    (Bloco, (3, 5)),
-    (Bloco, (4, 5)),
-    (Bloco, (5, 5)),
-    (Bloco, (9, 5)),
-    (Bloco, (14, 5)),
-    (Bloco, (24, 5)),
-    (Bloco, (2, 6)),
-    (Bloco, (10, 6)),
-    (Bloco, (13, 6)),
-    (Bloco, (24, 6)),
-    (Bloco, (1, 7)),
-    (Bloco, (11, 7)),
-    (Bloco, (12, 7)),
-    (Bloco, (24, 7)),
-    (Bloco, (1, 8)),
-    (Bloco, (24, 8)),
-    (Bloco, (1, 9)),
-    (Caixa, (23, 9)),
-    (Bloco, (24, 9)),
-    (Bloco, (1, 10)),
-    (Caixa, (22, 10)),
-    (Caixa, (23, 10)),
-    (Bloco, (24, 10)),
-    (Bloco, (1, 11)),
-    (Bloco, (22, 11)),
-    (Bloco, (23, 11)),
-    (Bloco, (24, 11)),
-    (Bloco, (0, 12)),
-    (Bloco, (1, 12)),
-    (Bloco, (6, 12)),
-    (Bloco, (17, 12)),
-    (Bloco, (22, 12)),
-    (Bloco, (0, 13)),
-    (Porta, (1, 13)),
-    (Bloco, (6, 13)),
-    (Caixa, (8, 13)),
-    (Bloco, (17, 13)),
-    (Bloco, (18, 13)),
-    (Bloco, (19, 13)),
-    (Bloco, (20, 13)),
-    (Bloco, (21, 13)),
-    (Bloco, (22, 13)),
-    (Bloco, (0, 14)),
-    (Bloco, (1, 14)),
-    (Bloco, (2, 14)),
-    (Bloco, (3, 14)),
-    (Bloco, (4, 14)),
-    (Bloco, (6, 14)),
-    (Caixa, (8, 14)),
-    (Caixa, (12, 14)),
-    (Bloco, (15, 14)),
-    (Bloco, (16, 14)),
-    (Bloco, (17, 14)),
-    (Bloco, (4, 15)),
-    (Bloco, (6, 15)),
-    (Caixa, (8, 15)),
-    (Bloco, (10, 15)),
-    (Bloco, (12, 15)),
-    (Caixa, (13, 15)),
-    (Bloco, (15, 15)),
-    (Bloco, (4, 16)),
-    (Bloco, (6, 16)),
-    (Bloco, (7, 16)),
-    (Bloco, (8, 16)),
-    (Bloco, (9, 16)),
-    (Bloco, (10, 16)),
-    (Bloco, (11, 16)),
-    (Bloco, (12, 16)),
-    (Bloco, (13, 16)),
-    (Bloco, (14, 16)),
-    (Bloco, (15, 16)),
-    (Bloco, (4, 17)),
-    (Bloco, (5, 17)),
-    (Bloco, (6, 17))
-  ]
+lista11 = [ (Bloco, (19, 0)), (Bloco, (18, 1)), (Bloco, (20, 1)), (Bloco, (17, 2)), (Bloco, (21, 2)), (Bloco, (7, 3)), (Bloco, (16, 3)), (Bloco, (22, 3)), (Bloco, (6, 4)), (Bloco, (8, 4)), (Bloco, (15, 4)), (Bloco, (23, 4)), (Bloco, (3, 5)), (Bloco, (4, 5)), (Bloco, (5, 5)), (Bloco, (9, 5)), (Bloco, (14, 5)), (Bloco, (24, 5)), (Bloco, (2, 6)), (Bloco, (10, 6)), (Bloco, (13, 6)), (Bloco, (24, 6)), (Bloco, (1, 7)), (Bloco, (11, 7)), (Bloco, (12, 7)), (Bloco, (24, 7)), (Bloco, (1, 8)), (Bloco, (24, 8)), (Bloco, (1, 9)), (Caixa, (23, 9)), (Bloco, (24, 9)), (Bloco, (1, 10)), (Caixa, (22, 10)), (Caixa, (23, 10)), (Bloco, (24, 10)), (Bloco, (1, 11)), (Bloco, (22, 11)), (Bloco, (23, 11)), (Bloco, (24, 11)), (Bloco, (0, 12)), (Bloco, (1, 12)), (Bloco, (6, 12)), (Bloco, (17, 12)), (Bloco, (22, 12)), (Bloco, (0, 13)), (Porta, (1, 13)), (Bloco, (6, 13)), (Caixa, (8, 13)), (Bloco, (17, 13)), (Bloco, (18, 13)), (Bloco, (19, 13)), (Bloco, (20, 13)), (Bloco, (21, 13)), (Bloco, (22, 13)), (Bloco, (0, 14)), (Bloco, (1, 14)), (Bloco, (2, 14)), (Bloco, (3, 14)), (Bloco, (4, 14)), (Bloco, (6, 14)), (Caixa, (8, 14)), (Caixa, (12, 14)), (Bloco, (15, 14)), (Bloco, (16, 14)), (Bloco, (17, 14)), (Bloco, (4, 15)), (Bloco, (6, 15)), (Caixa, (8, 15)), (Bloco, (10, 15)), (Bloco, (12, 15)), (Caixa, (13, 15)), (Bloco, (15, 15)), (Bloco, (4, 16)), (Bloco, (6, 16)), (Bloco, (7, 16)), (Bloco, (8, 16)), (Bloco, (9, 16)), (Bloco, (10, 16)), (Bloco, (11, 16)), (Bloco, (12, 16)), (Bloco, (13, 16)), (Bloco, (14, 16)), (Bloco, (15, 16)), (Bloco, (4, 17)), (Bloco, (5, 17)), (Bloco, (6, 17)) ]
 
 mapa11 :: Mapa
 mapa11 =
@@ -822,7 +404,30 @@ testsT4 =
     ]
 
 main = do
+  fileT1 <- openFile "errors-T1.txt" WriteMode
+  (countT1, out2) <- runTestText (putTextToHandle fileT1 False) $ TestList [testsT1]
+  -- countT1 <- runTestTT $ TestList [testsT1]
+  writeFile "results-T1.txt" (show countT1)
+
+  fileT2 <- openFile "errors-T2.txt" WriteMode
+  (countT2, out2) <- runTestText (putTextToHandle fileT2 False) $ TestList [testsT2]
+  -- countT2 <- runTestTT $ TestList [testsT2]
+  writeFile "results-T2.txt" (show countT2)
+
+  fileT3 <- openFile "errors-T3.txt" WriteMode
+  (countT3, out3) <- runTestText (putTextToHandle fileT3 False) $ TestList [testsT3]
+  -- countT3 <- runTestTT $ TestList [testsT3]
+  writeFile "results-T3.txt" (show countT3)
+
+  fileT4 <- openFile "errors-T4.txt" WriteMode
+  (countT4, out4) <- runTestText (putTextToHandle fileT4 False) $ TestList [testsT4]
+  -- countT4 <- runTestTT $ TestList [testsT4]
+  writeFile "results-T4.txt" (show countT4)
+
   file <- openFile "errors.txt" WriteMode
   (count, out) <- runTestText (putTextToHandle file False) $ TestList [testsT1, testsT2, testsT3, testsT4]
+  -- count <- runTestTT $ TestList [testsT1, testsT2, testsT3, testsT4]
   writeFile "results.txt" (show count)
+
   when (failures count > 0) Exit.exitFailure
+

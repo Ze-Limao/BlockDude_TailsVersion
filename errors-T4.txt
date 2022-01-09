@@ -1,0 +1,122 @@
+### Failure in: 0:2:Movimento Trepar Porta
+tests/Fase1.hs:34
+expected:        
+      X
+< X   X
+P XC  X
+XXXXXXX
+ but got:        
+      X
+  X   X
+P<XC  X
+XXXXXXX
+### Failure in: 0:4:Movimento Trepar para Este contra parede
+tests/Fase1.hs:34
+expected: 
+ but got:        
+      X
+      X
+P X C>X
+XXXXXXX
+### Failure in: 0:10:Movimento Trepar para Oeste com Caixa bloqueda por bloco
+tests/Fase1.hs:34
+expected: 
+ but got:        
+  X   X
+      X
+P X<  X
+XXXXXXX
+### Failure in: 0:12:Movimento AndarEsquerda bloqueado pela caixa contra bloco
+tests/Fase1.hs:34
+expected: 
+ but got:    X  
+P C < 
+XXXXXX
+### Failure in: 0:23:Movimento larga Caixa
+tests/Fase1.hs:34
+expected:        
+      X
+  X   X
+P X < X
+XXXXXXX
+ but got:        
+      X
+  X   X
+P XC< X
+XXXXXXX
+### Failure in: 0:27:Movimento levanta Caixa
+tests/Fase1.hs:34
+expected:    X  
+P>C   
+XXXXXX
+ but got:    X  
+P>    
+XXXXXX
+### Failure in: 0:29:Movimento larga Caixa entre blocos
+tests/Fase1.hs:34
+expected:        
+  X   X
+      X
+P X<  X
+XXXXXXX
+ but got:        
+  X   X
+  C   X
+P X<  X
+XXXXXXX
+### Failure in: 0:30:Movimento larga Caixa
+tests/Fase1.hs:34
+expected:        
+  X   X
+      X
+P X>  X
+XXXXXXX
+ but got:        
+  X   X
+      X
+P X>C X
+XXXXXXX
+### Failure in: 0:34:Movimento largar Caixa para baixo de Porta
+tests/Fase1.hs:34
+expected:         
+  <    X
+ PX   CX
+  X  CCX
+XXXXXXXX
+ but got:         
+  <    X
+ PX   CX
+ CX  CCX
+XXXXXXXX
+### Failure in: 0:36:Movimento levanta Caixa
+tests/Fase1.hs:34
+expected:        
+      X
+P     X
+  X C<X
+XXXXXXX
+ but got:        
+      X
+P     X
+  X  <X
+XXXXXXX
+### Failure in: 0:38:Resolve Jogo 07
+tests/Fase1.hs:34
+expected:        
+      X
+P     X
+ <X C X
+XXXXXXX
+ but got: 
+### Failure in: 0:39:Resolve Jogo 03
+tests/Fase1.hs:34
+expected: X                  X
+X                  X
+X                  X
+X                  X
+X                  X
+X   X       X      X
+XP  X   X<C X  C   X
+XXXXXXXXXXXXXXXXXXXX
+ but got: 
+Cases: 41  Tried: 41  Errors: 0  Failures: 12

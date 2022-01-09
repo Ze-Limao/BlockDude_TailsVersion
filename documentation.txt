@@ -1,0 +1,40 @@
+2021li1g092-0.1.0.0: unregistering (local file changes: 2021li1g092.cabal src/Funcoesuteis.hs src/LI12122.hs src/Tarefa1_2021li1g092.hs src/Tarefa2_2021l...)
+2021li1g092> configure (lib)
+Configuring 2021li1g092-0.1.0.0...
+2021li1g092> build (lib)
+Preprocessing library for 2021li1g092-0.1.0.0..
+Building library for 2021li1g092-0.1.0.0..
+[1 of 6] Compiling LI12122
+[2 of 6] Compiling Funcoesuteis
+[3 of 6] Compiling Tarefa1_2021li1g092
+[4 of 6] Compiling Tarefa2_2021li1g092
+[5 of 6] Compiling Tarefa3_2021li1g092
+[6 of 6] Compiling Tarefa4_2021li1g092
+2021li1g092> haddock
+Preprocessing library for 2021li1g092-0.1.0.0..
+Running Haddock on library for 2021li1g092-0.1.0.0..
+Haddock coverage:
+  92% ( 11 / 12) in 'LI12122'
+  Missing documentation for:
+    Mapa (src/LI12122.hs:28)
+  92% ( 11 / 12) in 'Funcoesuteis'
+  Missing documentation for:
+    Module header
+ 100% ( 14 / 14) in 'Tarefa1_2021li1g092'
+  75% (  3 /  4) in 'Tarefa2_2021li1g092'
+  Missing documentation for:
+    desconstroiMapa' (src/Tarefa2_2021li1g092.hs:23)
+ 100% ( 11 / 11) in 'Tarefa3_2021li1g092'
+ 100% ( 13 / 13) in 'Tarefa4_2021li1g092'
+Documentation created:
+.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.4.0.0/doc/html/2021li1g092/index.html,
+.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.4.0.0/doc/html/2021li1g092/2021li1g092.txt
+2021li1g092> copy/register
+Installing library in /home/nelson/Documents/LI1/projectos/2021li1g092/.stack-work/install/x86_64-linux-tinfo6/e619e721cfd93d212e783f07e0e112de47ec2ce9746d976e44e04c843f2a0455/9.0.1/lib/x86_64-linux-ghc-9.0.1/2021li1g092-0.1.0.0-5HIp8rWMXp8ZqnCUvs6qr
+Registering library for 2021li1g092-0.1.0.0..
+Updating Haddock index for local packages in
+/home/nelson/Documents/LI1/projectos/2021li1g092/.stack-work/install/x86_64-linux-tinfo6/e619e721cfd93d212e783f07e0e112de47ec2ce9746d976e44e04c843f2a0455/9.0.1/doc/index.html
+Updating Haddock index for local packages and dependencies in
+/home/nelson/Documents/LI1/projectos/2021li1g092/.stack-work/install/x86_64-linux-tinfo6/e619e721cfd93d212e783f07e0e112de47ec2ce9746d976e44e04c843f2a0455/9.0.1/doc/all/index.html
+Haddock index for snapshot packages already up to date at:
+/home/nelson/.stack/snapshots/x86_64-linux-tinfo6/e619e721cfd93d212e783f07e0e112de47ec2ce9746d976e44e04c843f2a0455/9.0.1/doc/index.html
