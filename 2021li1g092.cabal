@@ -1,0 +1,30 @@
+cabal-version:      2.4
+name:               2021li1g092
+version:            0.1.0.0
+
+library
+    exposed-modules:
+        LI12122
+        Tarefa1_2021li1g092
+        Tarefa2_2021li1g092
+        Tarefa3_2021li1g092
+        Tarefa4_2021li1g092
+        Funcoesuteis
+    hs-source-dirs:
+        src
+    build-depends:
+        base ^>=4.15.0.0
+        , gloss
+    default-language: Haskell2010
+
+
+test-suite 2021li1g092-test
+    type: exitcode-stdio-1.0
+    main-is: Fase1.hs
+    hs-source-dirs:
+        tests
+    build-depends:
+        2021li1g092
+        , base ^>=4.15.0.0
+        , HUnit
+    default-language: Haskell2010

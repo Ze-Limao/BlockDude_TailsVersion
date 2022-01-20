@@ -1,0 +1,6 @@
+  92% ( 11 / 12) in 'LI12122'
+  83% ( 10 / 12) in 'Funcoesuteis'
+  94% ( 16 / 17) in 'Tarefa1_2021li1g092'
+  67% (  6 /  9) in 'Tarefa2_2021li1g092'
+ 100% ( 11 / 11) in 'Tarefa3_2021li1g092'
+  89% ( 32 / 36) in 'Tarefa4_2021li1g092'

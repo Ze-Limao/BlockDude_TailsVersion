@@ -1,0 +1,21 @@
+### Failure in: 0:1:Valida Mapa 02
+tests/Fase1.hs:34
+expected: True
+ but got: False
+### Failure in: 0:2:Valida Mapa 03
+tests/Fase1.hs:34
+expected: True
+ but got: False
+### Failure in: 0:3:Valida Mapa 04
+tests/Fase1.hs:34
+expected: True
+ but got: False
+### Failure in: 0:4:Valida Mapa 05
+tests/Fase1.hs:34
+expected: True
+ but got: False
+### Failure in: 0:10:Valida Mapa 11
+tests/Fase1.hs:34
+expected: True
+ but got: False
+Cases: 22  Tried: 22  Errors: 0  Failures: 5
