@@ -12,7 +12,7 @@ It was fully developed in Haskell and consisted of 6 tasks:
 - Create and implement game graphics, using Gloss.
 - Create a game bot to solve, in the minimum necessary player movements, a map.
 
-### Demonstração do jogo: https://youtu.be/Qf_H0eNuY2Y
+### Demonstration: https://youtu.be/Qf_H0eNuY2Y
 
 ## Installing and running the game
 Firstly, install Haskell Platform (GHC and Cabal). To do so, follow the instructions for your specific system at: [haskell.org/downloads](https://www.haskell.org/downloads/)
