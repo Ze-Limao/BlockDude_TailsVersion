@@ -15,8 +15,9 @@ It was fully developed in Haskell and consisted of 6 tasks:
 ### Demonstração do jogo: https://youtu.be/Qf_H0eNuY2Y
 
 ## Installing and running the game
-Firstly, install Haskell Platform (GHC and Cabal). To do so, follow the instructions for your specific system at: haskell.org/downloads
-Finally, since the graphical interface of the game was developed using the Gloss library, you'll need to install it:
+Firstly, install Haskell Platform (GHC and Cabal). To do so, follow the instructions for your specific system at: [haskell.org/downloads](https://www.haskell.org/downloads/)
+
+Finally, since the graphical interface of the game was developed using the [Gloss](https://hackage.haskell.org/package/gloss) library, you'll need to install it:
 ```
 $ cabal update
 $ cabal install --lib gloss
@@ -24,16 +25,16 @@ $ cabal install --lib gloss-juicy
 ```
 ### Clone the repository
 ``` 
-$ git clone git@github.com:ruilopesm/Block-Knight-LI1.git
+$ git clone https://github.com/Ze-Limao/BlockDude_TailsVersion.git
 ```
 ### Compiling 
 ```
 $ cd src
-$ ghc Tarefa5_2021li1g033.hs
+$ ghc Tarefa5_2021li1g092.hs
 ````
 ### Running
 ```
-$ ./Tarefa5_2021li1g033
+$ ./Tarefa5_2021li1g092
 ```
 ## Possible problems
 In case you get an mpv error, you'll need to install it (as it was used to play audio inside the game). Follow the instructions here: mpv.io/installation
