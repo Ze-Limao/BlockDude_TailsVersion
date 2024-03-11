@@ -1,4 +1,4 @@
-# Laboratórios de Informática I
+# Tails: O Carregador de Caixas
 ## Software Labs I | Laboratórios de Informática I
 This game was developed during the first semester of the Software Engineering degree @ University of Minho.
 
